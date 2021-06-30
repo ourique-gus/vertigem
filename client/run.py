@@ -1,5 +1,5 @@
-from main.client import Client
+from main.game import Game
 
 if __name__ == "__main__":
     
-    main_client = Client()
+    main_game = Game()

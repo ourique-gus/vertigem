@@ -2,8 +2,8 @@ import socket
 import threading
 
 class Networking:
-    def __init__(self, client, ip, port):
-        self.client=client
+    def __init__(self, game, ip, port):
+        self.game=game
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.ip = ip
@@ -24,4 +24,4 @@ class Networking:
             self.socket.send(str.encode(data))
             return self.socket.recv(2048).decode()
         except socket.error as e:
-            self.client.print_log(str(e))
+            self.game.print_log(str(e))

@@ -1,8 +1,13 @@
 import pygame
-from main.networking import Networking
 import datetime
+from main.networking import Networking
+from main.controls import Controls
+from main.player import Player
+from main.camera import Camera
+from main.screen import Screen
+from main.character import Character
 
-class Client():
+class Game():
     def __init__(self):
         self.ip='127.0.0.1'
         self.port=7777
@@ -10,9 +15,12 @@ class Client():
         self.dt=1/self.tps
         self.is_running=False
         
+        self.screen_width=1366
+        self.screen_height=768
+        
         self.connection_status = self.connect_to_server()
         if self.connection_status:
-            self.start_client()
+            self.start_game()
         
     def connect_to_server(self):
         self.print_log('Connecting to server...')
@@ -24,18 +32,31 @@ class Client():
             self.print_log('Failed to connect to the server')
         return connection_status
         
-    def start_client(self):
-        self.print_log('>> Client started')
+    def start_game(self):
+        self.print_log('>> Game started <<')
+        
         self.clock=pygame.time.Clock()
+        self.screen=Screen(self,self.screen_width, self.screen_height)
+        self.controls=Controls(self)
+        
+        self.screen.start()        
         self.is_running=True
-        data=None
-        send=0
+        
+        self.entities={100:Character(self,100,200,300, 0)}
+        
+        send='1'
         
         while self.is_running:
             self.clock.tick(self.tps)
-            send=str(float(send)+1)
-            self.print_log("Received: " + str(data) + ", Sending : " + str(send))
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.is_running = False
+            
+            
             data=self.networking.send(send)
+            
+            self.screen.update()
             
     def get_now(self):
         return datetime.datetime.now().strftime("%d/%m/%YT%H:%M:%S")
