@@ -17,3 +17,6 @@ class Character():
         
     def draw(self):
         self.game.screen.blit(self.sprite, (self.x,self.y))
+        
+    def set_pid(self,pid)
+        self.pid=pid

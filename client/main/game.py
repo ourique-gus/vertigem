@@ -43,7 +43,7 @@ class Game():
         self.screen.start()        
         self.is_running=True
         
-        self.entities={100:Character(self,100,200,300, 0)}
+        self.entities={}
         
         while self.is_running:
             self.clock.tick(self.tps)
@@ -57,6 +57,16 @@ class Game():
             self.controls.controls_to_data()
             
             data=self.networking.send(self.controls.data)
+            players=data.split(',')
+            for var in players:
+                info=var.split(':')
+                pid=int(info[0])
+                x=float(info[1])
+                y=float(info[2])
+                if not pid in self.entities:
+                    self.entities[pid]=Character(self,pid,x,y, 0)
+                self.entities[pid].x=x
+                self.entities[pid].y=y
             
             self.screen.update()
             
