@@ -17,7 +17,8 @@ class Networking:
             self.player_id=self.socket.recv(2048).decode()
             self.connection_status=self.player_id
             return self.connection_status
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def send(self, data):

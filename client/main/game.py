@@ -9,7 +9,7 @@ from main.character import Character
 
 class Game():
     def __init__(self):
-        self.ip='127.0.0.1'
+        self.ip='192.168.0.57'
         self.port=7777
         self.tps=30
         self.dt=1/self.tps
@@ -57,16 +57,17 @@ class Game():
             self.controls.controls_to_data()
             
             data=self.networking.send(self.controls.data)
-            players=data.split(',')
-            for var in players:
-                info=var.split(':')
-                pid=int(info[0])
-                x=float(info[1])
-                y=float(info[2])
-                if not pid in self.entities:
-                    self.entities[pid]=Character(self,pid,x,y, 0)
-                self.entities[pid].x=x
-                self.entities[pid].y=y
+            if data and len(data):
+                players=data.split(',')
+                for var in players:
+                    info=var.split(':')
+                    pid=int(info[0])
+                    x=float(info[1])
+                    y=float(info[2])
+                    if not pid in self.entities:
+                        self.entities[pid]=Character(self,pid,x,y, 0)
+                    self.entities[pid].x=x
+                    self.entities[pid].y=y
             
             self.screen.update()
             
