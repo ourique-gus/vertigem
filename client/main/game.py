@@ -38,13 +38,12 @@ class Game():
         self.clock=pygame.time.Clock()
         self.screen=Screen(self,self.screen_width, self.screen_height)
         self.controls=Controls(self)
+        self.player=Player(self, self.networking.player_id)
         
         self.screen.start()        
         self.is_running=True
         
         self.entities={100:Character(self,100,200,300, 0)}
-        
-        send='1'
         
         while self.is_running:
             self.clock.tick(self.tps)
@@ -54,7 +53,10 @@ class Game():
                     self.is_running = False
             
             
-            data=self.networking.send(send)
+            self.controls.get_controls()
+            self.controls.controls_to_data()
+            
+            data=self.networking.send(self.controls.data)
             
             self.screen.update()
             

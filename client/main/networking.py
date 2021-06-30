@@ -9,12 +9,13 @@ class Networking:
         self.ip = ip
         self.port = port
         self.addr = (self.ip, self.port)
+        self.player_id=0
         
     def connect(self):
         try:
             self.socket.connect(self.addr)
-            self.connection_status=bool(self.socket.recv(2048).decode())
-            print(self.connection_status)
+            self.player_id=self.socket.recv(2048).decode()
+            self.connection_status=self.player_id
             return self.connection_status
         except:
             return False
