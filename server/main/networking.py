@@ -41,7 +41,7 @@ class Networking():
         reply = ""
         while True:
             try:
-                data = conn.recv(2048).decode()
+                data = conn.recv(4096).decode()
                 
                 if not data:
                     print("Disconnected")
@@ -72,6 +72,6 @@ class Networking():
         self.server_thread.start()
         
     def get_entities_data(self):
-        var=','.join([':'.join([str(pid),str(self.server.entities[pid].x),str(self.server.entities[pid].y)]) for pid in self.server.entities if pid <= self.max_id])
+        var=','.join([':'.join([str(pid),'%5.2f' %self.server.entities[pid].x,'%5.2f' %self.server.entities[pid].y]) for pid in self.server.entities if pid <= self.max_id])
         return var
         

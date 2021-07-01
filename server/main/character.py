@@ -13,8 +13,12 @@ class Character():
         self.health=100
         self.controls=[0,0,0,0]
         self.vmod=5
+        self.max_delay=10
+        self.delay=0
         
     def update(self):
+        if self.delay:
+            self.delay-=1
         vx=-self.controls[1]+self.controls[3]
         vy=-self.controls[0]+self.controls[2]
         vr=np.sqrt(vx*vx+vy*vy)
@@ -34,9 +38,10 @@ class Character():
         self.y+=self.vy*self.vmod
         
         vr=np.sqrt(self.vx*self.vx+self.vy*self.vy)
-        pid=np.random.randint(1,self.server.networking.max_id)
-        while pid in self.server.networking.client_threads:
+        if vr and self.controls[4] and not self.delay:
+            self.delay=self.max_delay
             pid=np.random.randint(1,self.server.networking.max_id)
-        if vr and self.controls[4]:
-            self.server.entities[pid]=Projectile(self.server, pid,self.x,self.y,2*self.vx,2*self.vy)
+            while pid in self.server.networking.client_threads:
+                pid=np.random.randint(1,self.server.networking.max_id)
+            self.server.entities[pid]=Projectile(self.server, pid,self.x,self.y,2*self.vx*self.vmod,2*self.vy*self.vmod)
         
