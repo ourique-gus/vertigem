@@ -4,7 +4,7 @@ import datetime
 
 class Server():
     def __init__(self):
-        self.ip='127.0.0.1'
+        self.ip='192.168.0.57'
         self.port=7777
         self.max_connections=6
         self.tps=30
@@ -32,9 +32,18 @@ class Server():
         self.clock=pygame.time.Clock()
         self.is_running=True
         
+        self.entities={}
+        
         while self.is_running:
             self.clock.tick(self.tps)
-            pass
+            
+            ents={ent for ent in self.entities}
+            for ent in ents:
+                if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
+                    self.entities.pop(ent)
+                elif hasattr(self.entities[ent],'update'):
+                    self.entities[ent].update()
+                
             
     def get_now(self):
         return datetime.datetime.now().strftime("%d/%m/%YT%H:%M:%S")
