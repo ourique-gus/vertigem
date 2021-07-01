@@ -9,8 +9,6 @@ from main.character import Character
 
 class Game():
     def __init__(self):
-        self.ip='192.168.0.57'
-        self.port=7777
         self.tps=30
         self.dt=1/self.tps
         self.is_running=False
@@ -24,7 +22,7 @@ class Game():
         
     def connect_to_server(self):
         self.print_log('Connecting to server...')
-        self.networking=Networking(self, self.ip, self.port)
+        self.networking=Networking(self)
         connection_status = self.networking.connect()
         if connection_status:
             self.print_log('Connected to the server')

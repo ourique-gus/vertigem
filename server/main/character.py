@@ -21,8 +21,14 @@ class Character():
             self.vx=vx/vr
             self.vy=vy/vr
         else:
-            self.vx=0
-            self.vy=0
+            vrr=np.sqrt(self.vx*self.vx+self.vy*self.vy)
+            vr_var=vrr-self.vmod*0.01
+            if vrr > 0 and vr_var > 0:
+                self.vx=self.vx/vrr*vr_var
+                self.vy=self.vy/vrr*vr_var
+            else:
+                self.vx=0
+                self.vy=0
         self.x+=self.vx*self.vmod
         self.y+=self.vy*self.vmod
         
