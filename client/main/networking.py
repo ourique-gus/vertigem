@@ -7,7 +7,7 @@ class Networking:
         self.game=game
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.ip = not ip and (socket.gethostname()=='brynhildr' and '192.168.0.57' or get_server_ip()) or ip
+        self.ip = not ip and (socket.gethostname()=='brynhildr' and '192.168.0.57' or self.get_server_ip()) or ip
         self.port = not port and 7777 or port
         self.addr = (self.ip, self.port)
         self.player_id=0
