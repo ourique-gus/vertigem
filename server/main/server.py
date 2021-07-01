@@ -38,6 +38,7 @@ class Server():
             self.clock.tick(self.tps)
             
             ents={ent for ent in self.entities}
+            
             for ent in ents:
                 if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
                     self.entities.pop(ent)

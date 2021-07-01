@@ -1,8 +1,9 @@
 import numpy as np
+from main.projectile import Projectile
 
 class Character():
-    def __init__(self,game, pid, x, y, theta):
-        self.game=game
+    def __init__(self,server, pid, x, y, theta):
+        self.server=server
         self.pid=pid
         self.x=x
         self.y=y
@@ -31,4 +32,11 @@ class Character():
                 self.vy=0
         self.x+=self.vx*self.vmod
         self.y+=self.vy*self.vmod
+        
+        vr=np.sqrt(self.vx*self.vx+self.vy*self.vy)
+        pid=np.random.randint(1,self.server.networking.max_id)
+        while pid in self.server.networking.client_threads:
+            pid=np.random.randint(1,self.server.networking.max_id)
+        if vr and self.controls[4]:
+            self.server.entities[pid]=Projectile(self.server, pid,self.x,self.y,2*self.vx,2*self.vy)
         

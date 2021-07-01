@@ -13,5 +13,12 @@ class Controls():
         self.mouse=pygame.mouse.get_pos()
         
     def controls_to_data(self):
-        self.data=':'.join([str(i) for i in [self.keys[pygame.K_w], self.keys[pygame.K_a], self.keys[pygame.K_s], self.keys[pygame.K_d]]])
+        self.data=':'.join([str(i) for i in [
+                self.keys[pygame.K_w],
+                self.keys[pygame.K_a],
+                self.keys[pygame.K_s],
+                self.keys[pygame.K_d],
+                self.keys[pygame.K_e]
+                ]
+            ])
         return self.data
