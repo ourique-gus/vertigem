@@ -50,22 +50,33 @@ class Game():
                 if event.type == pygame.QUIT:
                     self.is_running = False
             
+            ents=[ent for ent in self.entities]
+            for ent in ents:
+                if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
+                    self.entities.pop(ent)
+            ents=[ent for ent in self.entities]
             
             self.controls.get_controls()
             self.controls.controls_to_data()
             
             data=self.networking.send(self.controls.data)
             if data and len(data):
+                pid_list=set()
                 players=data.split(',')
                 for var in players:
                     info=var.split(':')
                     pid=int(info[0])
+                    pid_list.add(pid)
                     x=float(info[1])
                     y=float(info[2])
                     if not pid in self.entities:
                         self.entities[pid]=Character(self,pid,x,y, 0)
                     self.entities[pid].x=x
                     self.entities[pid].y=y
+                for ent in ents:
+                    if not ent in pid_list:
+                        self.entities[ent].remove=True
+            
             
             self.screen.update()
             
