@@ -4,11 +4,13 @@ class Projectile():
     def __init__(self,game, pid, x, y, vx, vy):
         self.game=game
         self.pid=pid
+        self.kind='Projectile'
         self.x=x
         self.y=y
         self.vx=vx
         self.vy=vy
         self.tick=0
+        self.event='None'
         
     def update(self):
         self.tick+=1

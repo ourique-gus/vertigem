@@ -32,6 +32,15 @@ class Server():
         self.clock=pygame.time.Clock()
         self.is_running=True
         
+        self.kind_from_to={
+            'Character':0,
+            'Projectile':1,
+            }
+            
+        self.event_from_to={
+            'None':0,
+            }
+        
         self.entities={}
         
         while self.is_running:

@@ -40,7 +40,7 @@ class Networking():
         conn.send( str(player_id).encode() )
         reply = ""
         while True:
-            try:
+            #try:
                 data = conn.recv(4096).decode()
                 
                 if not data:
@@ -58,9 +58,9 @@ class Networking():
                     self.server.print_log("Received: " + data + ", Sending : " + reply)
 
                 conn.sendall(str.encode(reply))
-            except Exception as e:
-                print(e)
-                break
+            #except Exception as e:
+            #    print(e)
+            #    break
 
         self.server.print_log("Lost connection")
         conn.close()
@@ -72,6 +72,12 @@ class Networking():
         self.server_thread.start()
         
     def get_entities_data(self):
-        var=','.join([':'.join([str(pid),'%5.2f' %self.server.entities[pid].x,'%5.2f' %self.server.entities[pid].y]) for pid in self.server.entities if pid <= self.max_id])
+        var=','.join([':'.join([
+                '%4d' % pid,
+                '%2d' % self.server.kind_from_to[self.server.entities[pid].kind],
+                '%6d' % int(100*self.server.entities[pid].x),
+                '%6d' % int(100*self.server.entities[pid].y),
+                '%2d' % self.server.event_from_to[self.server.entities[pid].event]
+            ]) for pid in self.server.entities if pid <= self.max_id])
         return var
         

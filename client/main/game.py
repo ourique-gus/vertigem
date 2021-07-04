@@ -6,6 +6,7 @@ from main.player import Player
 from main.camera import Camera
 from main.screen import Screen
 from main.character import Character
+from main.projectile import Projectile
 
 class Game():
     def __init__(self):
@@ -41,6 +42,15 @@ class Game():
         self.screen.start()        
         self.is_running=True
         
+        self.kind_from_to={
+            0:Character,
+            1:Projectile,
+            }
+            
+        self.event_from_to={
+            0:None,
+            }
+        
         self.entities={}
         
         while self.is_running:
@@ -67,10 +77,12 @@ class Game():
                     info=var.split(':')
                     pid=int(info[0])
                     pid_list.add(pid)
-                    x=float(info[1])
-                    y=float(info[2])
+                    kind=int(info[1])
+                    x=float(info[2])/100
+                    y=float(info[3])/100
+                    event=int(info[4])
                     if not pid in self.entities:
-                        self.entities[pid]=Character(self,pid,x,y, 0)
+                        self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, 0)
                     self.entities[pid].x=x
                     self.entities[pid].y=y
                 for ent in ents:

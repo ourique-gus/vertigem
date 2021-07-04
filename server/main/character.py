@@ -5,6 +5,7 @@ class Character():
     def __init__(self,server, pid, x, y, theta):
         self.server=server
         self.pid=pid
+        self.kind='Character'
         self.x=x
         self.y=y
         self.vx=0
@@ -15,6 +16,7 @@ class Character():
         self.vmod=5
         self.max_delay=10
         self.delay=0
+        self.event='None'
         
     def update(self):
         if self.delay:
