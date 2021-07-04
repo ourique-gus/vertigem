@@ -17,11 +17,13 @@ class Character():
         self.sprite.fill((255,255,255,0))
         pygame.draw.circle(self.sprite,self.colour,(self.r,self.r),self.r)
         
+        self.sprite_size=self.sprite.get_size()
+        
     def update(self):
         pass
         
     def draw(self):
-        self.game.screen.blit(self.sprite, (self.x,self.y))
+        self.game.screen.blit(self.sprite, (self.x-self.sprite_size[0]/2,self.y-self.sprite_size[1]/2))
         
     def set_pid(self,pid):
         self.pid=pid
