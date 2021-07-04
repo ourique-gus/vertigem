@@ -7,7 +7,7 @@ class Character():
         self.x=x
         self.y=y
         self.theta=theta
-        self.r=10
+        self.r=30
         self.sprite=pygame.Surface((2*self.r, 2*self.r), flags=pygame.SRCALPHA)
         self.sprite.fill((255,255,255,0))
         pygame.draw.circle(self.sprite,(255,255,255,255),(self.r,self.r),self.r)
