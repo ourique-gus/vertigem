@@ -41,7 +41,7 @@ class Networking():
         reply = ""
         while True:
             try:
-                data = conn.recv(8192).decode()
+                data = conn.recv(16384).decode()
                 
                 if not data:
                     print("Disconnected")
