@@ -80,17 +80,20 @@ class Game():
                 pid_list=set()
                 players=data.split(',')
                 for var in players:
-                    info=var.split(':')
-                    pid=int(info[0])
-                    pid_list.add(pid)
-                    kind=int(info[1])
-                    x=float(info[2])/100
-                    y=float(info[3])/100
-                    event=int(info[4])
-                    if not pid in self.entities:
-                        self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, 0)
-                    self.entities[pid].x=x
-                    self.entities[pid].y=y
+                    try:
+                        info=var.split(':')
+                        pid=int(info[0])
+                        pid_list.add(pid)
+                        kind=int(info[1])
+                        x=float(info[2])/100
+                        y=float(info[3])/100
+                        event=int(info[4])
+                        if not pid in self.entities:
+                            self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, 0)
+                        self.entities[pid].x=x
+                        self.entities[pid].y=y
+                    except:
+                        pass
                 for ent in ents:
                     if not ent in pid_list and ent <= self.max_server_pid:
                         self.entities[ent].remove=True

@@ -51,4 +51,7 @@ class Character():
             sangle=np.sin(angle)
             vm=np.sqrt(self.vx*self.vx+self.vy*self.vy)
             self.server.entities[pid]=Projectile(self.server, pid,self.x+np.cos(angle)*delta,self.y+np.sin(angle)*delta,2*vm*self.vmod*cangle,2*vm*self.vmod*sangle)
+
+
+
         
