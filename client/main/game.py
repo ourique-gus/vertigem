@@ -7,6 +7,7 @@ from main.camera import Camera
 from main.screen import Screen
 from main.character import Character
 from main.projectile import Projectile
+from main.background import Background
 
 class Game():
     def __init__(self):
@@ -52,7 +53,11 @@ class Game():
             0:None,
             }
         
-        self.entities={}
+        
+        self.max_server_pid=8192
+        self.background=Background(self,8913,10000,10000,10000)
+        self.entities={8913:self.background}
+        
         
         while self.is_running:
             self.clock.tick(self.tps)
@@ -87,7 +92,7 @@ class Game():
                     self.entities[pid].x=x
                     self.entities[pid].y=y
                 for ent in ents:
-                    if not ent in pid_list:
+                    if not ent in pid_list and ent <= self.max_server_pid:
                         self.entities[ent].remove=True
             self.camera.update()            
             
