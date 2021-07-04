@@ -23,7 +23,11 @@ class Character():
         pass
         
     def draw(self):
-        self.game.screen.blit(self.sprite, (self.x-self.sprite_size[0]/2,self.y-self.sprite_size[1]/2))
+        self.game.screen.blit(self.sprite, (
+            self.x-self.sprite_size[0]/2-self.game.camera.x+self.game.screen.width/2,
+            self.y-self.sprite_size[1]/2-self.game.camera.y+self.game.screen.height/2
+            )
+        )
         
     def set_pid(self,pid):
         self.pid=pid

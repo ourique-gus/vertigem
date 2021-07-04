@@ -18,8 +18,10 @@ class Controls():
         if self.game.player.pid in self.game.entities:
             x=self.game.entities[self.game.player.pid].x
             y=self.game.entities[self.game.player.pid].y
-            dx=self.mouse[0]-x
-            dy=self.mouse[1]-y
+            #dx=self.mouse[0]-x
+            #dy=self.mouse[1]-y
+            dx=self.mouse[0]-self.game.screen.width/2
+            dy=self.mouse[1]-self.game.screen.height/2
             angle=1000*np.arctan2(dy,dx)
         self.data=':'.join([str(i) for i in [
                 self.keys[pygame.K_w],

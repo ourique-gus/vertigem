@@ -7,5 +7,6 @@ class Camera():
         self.y=y
         
     def update(self):
-        self.x=self.game.player.x
-        self.y=self.game.player.y
+        if hasattr(self.game,'player') and self.game.player.pid in self.game.entities:
+            self.x=self.game.entities[self.game.player.pid].x
+            self.y=self.game.entities[self.game.player.pid].y

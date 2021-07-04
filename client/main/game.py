@@ -38,6 +38,7 @@ class Game():
         self.screen=Screen(self,self.screen_width, self.screen_height)
         self.controls=Controls(self)
         self.player=Player(self, self.networking.player_id)
+        self.camera=Camera(self, 0, 0)
         
         self.screen.start()        
         self.is_running=True
@@ -88,7 +89,7 @@ class Game():
                 for ent in ents:
                     if not ent in pid_list:
                         self.entities[ent].remove=True
-            
+            self.camera.update()            
             
             self.screen.update()
             
