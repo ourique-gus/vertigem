@@ -8,24 +8,36 @@ class Background():
         self.width=width
         self.height=height
         self.num=num
-        self.r=3
+        self.r=1
         self.colour=(127,255,212,255)
-        self.sprite=pygame.Surface((2*self.r, 2*self.r), flags=pygame.SRCALPHA)
-        self.sprite.fill((255,255,255,0))
-        pygame.draw.circle(self.sprite,self.colour,(self.r,self.r),self.r)
-        self.sprite_size=self.sprite.get_size()
+        self.sprite=[]
+        self.sprite_size=[]
+        for i in [0,1,2,3,2,1,0]:
+            r=self.r+i
+            temp_sprite=pygame.Surface((2*r, 2*r), flags=pygame.SRCALPHA)
+            temp_sprite.fill((255,255,255,0))
+            temp_sprite_size=temp_sprite.get_size()
+            pygame.draw.circle(temp_sprite,self.colour,(r,r),r)
+            self.sprite.append(temp_sprite)
+            self.sprite_size.append(temp_sprite_size)
+        self.num_sprites=len(self.sprite)
         self.zorder=-9999
         self.x=(np.random.rand(self.num)-0.5)*self.width
         self.y=(np.random.rand(self.num)-0.5)*self.height
+        self.sid=np.random.randint(0,3, self.num)
         
     def update(self):
         pass
         
     def draw(self):
         for star in range(self.num):
-            self.game.screen.blit(self.sprite, (
-                self.x[star]-self.sprite_size[0]/2-self.game.camera.x+self.game.screen.width/2,
-                self.y[star]-self.sprite_size[1]/2-self.game.camera.y+self.game.screen.height/2
+            if np.random.rand() < 0.1:
+                self.sid[star]+=1
+            if self.sid[star] >= self.num_sprites:
+                self.sid[star]=0
+            self.game.screen.blit(self.sprite[self.sid[star]], (
+                self.x[star]-self.sprite_size[self.sid[star]][0]/2-self.game.camera.x+self.game.screen.width/2,
+                self.y[star]-self.sprite_size[self.sid[star]][1]/2-self.game.camera.y+self.game.screen.height/2
                 )
             )
         
