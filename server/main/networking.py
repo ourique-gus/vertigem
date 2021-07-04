@@ -40,7 +40,7 @@ class Networking():
         conn.send( str(player_id).encode() )
         reply = ""
         while True:
-            #try:
+            try:
                 data = conn.recv(4096).decode()
                 
                 if not data:
@@ -55,12 +55,12 @@ class Networking():
                     if len(self.server.entities):
                         reply=self.get_entities_data()
                         
-                    self.server.print_log("Received: " + data + ", Sending : " + reply)
+                    #self.server.print_log("Received: " + data + ", Sending : " + reply)
 
                 conn.sendall(str.encode(reply))
-            #except Exception as e:
-            #    print(e)
-            #    break
+            except Exception as e:
+                print(e)
+                break
 
         self.server.print_log("Lost connection")
         conn.close()
