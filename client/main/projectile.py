@@ -1,24 +1,28 @@
 import pygame
 
 class Projectile():
-    def __init__(self,game, pid, x, y, theta):
+    def __init__(self,game, pid, x, y, vx, vy, theta):
         self.game=game
         self.pid=pid
         self.x=x
         self.y=y
+        self.vx=vx
+        self.vy=vy
         self.theta=theta
         self.r=5
         self.colour=(255,0,0,255)
         self.sprite=pygame.Surface((2*self.r, 2*self.r), flags=pygame.SRCALPHA)
         self.sprite.fill((255,255,255,0))
         pygame.draw.circle(self.sprite,self.colour,(self.r,self.r),self.r)
-        
+        print('here')
         self.sprite_size=self.sprite.get_size()
         
     def update(self):
         pass
         
     def draw(self):
+        self.x+=self.vx
+        self.y+=self.vy
         dx=self.x-self.game.camera.x
         dy=self.y-self.game.camera.y
         self.game.screen.blit(self.sprite, (

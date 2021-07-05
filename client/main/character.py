@@ -1,11 +1,13 @@
 import pygame
 
 class Character():
-    def __init__(self,game, pid, x, y, angle):
+    def __init__(self,game, pid, x, y, vx, vy, angle):
         self.game=game
         self.pid=pid
         self.x=x
         self.y=y
+        self.vx=vx
+        self.vy=vy
         self.angle=angle
         self.r=10
         print(self.game.player.pid, self.pid, type(self.game.player.pid), type(self.pid))

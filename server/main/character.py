@@ -1,5 +1,5 @@
 import numpy as np
-from main.projectile import Projectile
+from main.projectile_spawner import ProjectileSpawner
 
 class Character():
     def __init__(self,server, pid, x, y, angle):
@@ -15,7 +15,7 @@ class Character():
         self.health=100
         self.controls=[0,0,0,0,0,0]
         self.vmod=5
-        self.max_delay=10
+        self.max_delay=1
         self.delay=0
         self.event='None'
         
@@ -54,7 +54,7 @@ class Character():
             delta=20
 
             vm=np.sqrt(self.vx*self.vx+self.vy*self.vy)
-            self.server.entities[pid]=Projectile(self.server, pid,self.x+sangle*delta,self.y-cangle*delta,2*vm*self.vmod*sangle,-2*vm*self.vmod*cangle)
+            self.server.entities[pid]=ProjectileSpawner(self.server, pid,self.x+sangle*delta,self.y-cangle*delta,2*vm*self.vmod*sangle,-2*vm*self.vmod*cangle)
 
 
 

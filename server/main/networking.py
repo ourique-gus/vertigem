@@ -77,6 +77,8 @@ class Networking():
                 '%2d' % self.server.kind_from_to[self.server.entities[pid].kind],
                 '%6d' % int(100*self.server.entities[pid].x),
                 '%6d' % int(100*self.server.entities[pid].y),
+                '%6d' % int(100*self.server.entities[pid].vx),
+                '%6d' % int(100*self.server.entities[pid].vy),
                 '%2d' % self.server.event_from_to[self.server.entities[pid].event]
             ]) for pid in self.server.entities if pid <= self.max_id])
         return var

@@ -7,7 +7,7 @@ class Server():
         self.ip='192.168.0.57'
         self.port=7777
         self.max_connections=6
-        self.tps=30
+        self.tps=60
         self.dt=1/self.tps
         self.is_running=False
         
@@ -34,7 +34,7 @@ class Server():
         
         self.kind_from_to={
             'Character':0,
-            'Projectile':1,
+            'ProjectileSpawner':1,
             }
             
         self.event_from_to={

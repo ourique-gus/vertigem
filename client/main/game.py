@@ -6,8 +6,9 @@ from main.player import Player
 from main.camera import Camera
 from main.screen import Screen
 from main.character import Character
-from main.projectile import Projectile
+from main.projectile_spawner import ProjectileSpawner
 from main.background import Background
+from main.collider import Collider
 
 class Game():
     def __init__(self):
@@ -46,7 +47,7 @@ class Game():
         
         self.kind_from_to={
             0:Character,
-            1:Projectile,
+            1:ProjectileSpawner,
             }
             
         self.event_from_to={
@@ -58,7 +59,10 @@ class Game():
         
         self.max_server_pid=8192
         self.background=Background(self,8913,10000,10000,10000)
-        self.entities={8913:self.background}
+        self.entities={
+            8913:self.background,
+            #8914:Collider(self,8914, 0, 200, 0, 50)
+        }
         
         
         while self.is_running:
@@ -83,20 +87,21 @@ class Game():
                 pid_list=set()
                 players=data.split(',')
                 for var in players:
-                    try:
-                        info=var.split(':')
-                        pid=int(info[0])
-                        pid_list.add(pid)
-                        kind=int(info[1])
-                        x=float(info[2])/100
-                        y=float(info[3])/100
-                        event=int(info[4])
-                        if not pid in self.entities:
-                            self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, 0)
-                        self.entities[pid].x=x
-                        self.entities[pid].y=y
-                    except:
-                        pass
+                    info=var.split(':')
+                    pid=int(info[0])
+                    pid_list.add(pid)
+                    kind=int(info[1])
+                    x=float(info[2])/100
+                    y=float(info[3])/100
+                    vx=float(info[4])/100
+                    vy=float(info[5])/100
+                    event=int(info[6])
+                    if not pid in self.entities:
+                        self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, vx, vy, 0)
+                    self.entities[pid].x=x
+                    self.entities[pid].y=y
+                    self.entities[pid].vx=vx
+                    self.entities[pid].vy=vy
                 for ent in ents:
                     if not ent in pid_list and ent <= self.max_server_pid:
                         self.entities[ent].remove=True
