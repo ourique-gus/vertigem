@@ -21,7 +21,6 @@ class Character():
         
     def update(self):
         self.angle=self.controls[5]/1000.
-        print(self.angle)
         cangle=np.cos(self.angle)
         sangle=np.sin(self.angle)
         if self.delay:
