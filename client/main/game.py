@@ -76,6 +76,8 @@ class Game():
             for ent in ents:
                 if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
                     self.entities.pop(ent)
+                elif hasattr(self.entities[ent],'update'):
+                    self.entities[ent].update()
             ents=[ent for ent in self.entities]
 
             self.controls.get_controls()

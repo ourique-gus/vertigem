@@ -14,15 +14,19 @@ class Projectile():
         self.sprite=pygame.Surface((2*self.r, 2*self.r), flags=pygame.SRCALPHA)
         self.sprite.fill((255,255,255,0))
         pygame.draw.circle(self.sprite,self.colour,(self.r,self.r),self.r)
-        print('here')
         self.sprite_size=self.sprite.get_size()
+        self.tick=0
         
     def update(self):
-        pass
-        
-    def draw(self):
+        self.tick+=1
         self.x+=self.vx
         self.y+=self.vy
+        
+        if self.tick > 600:
+            self.remove=True
+        
+        
+    def draw(self):
         dx=self.x-self.game.camera.x
         dy=self.y-self.game.camera.y
         self.game.screen.blit(self.sprite, (
