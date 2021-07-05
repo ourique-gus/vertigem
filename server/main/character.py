@@ -2,7 +2,7 @@ import numpy as np
 from main.projectile import Projectile
 
 class Character():
-    def __init__(self,server, pid, x, y, theta):
+    def __init__(self,server, pid, x, y, angle):
         self.server=server
         self.pid=pid
         self.kind='Character'
@@ -11,7 +11,7 @@ class Character():
         self.vx=0
         self.vy=0
         self.r=10
-        self.theta=theta
+        self.angle=angle
         self.health=100
         self.controls=[0,0,0,0,0,0]
         self.vmod=5
@@ -20,10 +20,17 @@ class Character():
         self.event='None'
         
     def update(self):
+        self.angle=self.controls[5]/1000.
+        print(self.angle)
+        cangle=np.cos(self.angle)
+        sangle=np.sin(self.angle)
         if self.delay:
             self.delay-=1
-        vx=-self.controls[1]+self.controls[3]
-        vy=-self.controls[0]+self.controls[2]
+        dvx=-self.controls[1]+self.controls[3]
+        dvy=-self.controls[0]+self.controls[2]
+        vx=cangle*dvx-sangle*dvy
+        vy=+sangle*dvx+cangle*dvy
+
         vr=np.sqrt(vx*vx+vy*vy)
         if vr > 0:
             self.vx=vx/vr
@@ -45,12 +52,10 @@ class Character():
             pid=np.random.randint(1,self.server.networking.max_id)
             while pid in self.server.networking.client_threads:
                 pid=np.random.randint(1,self.server.networking.max_id)
-            angle=self.controls[5]/1000.
             delta=20
-            cangle=np.cos(angle)
-            sangle=np.sin(angle)
+
             vm=np.sqrt(self.vx*self.vx+self.vy*self.vy)
-            self.server.entities[pid]=Projectile(self.server, pid,self.x+np.cos(angle)*delta,self.y+np.sin(angle)*delta,2*vm*self.vmod*cangle,2*vm*self.vmod*sangle)
+            self.server.entities[pid]=Projectile(self.server, pid,self.x+sangle*delta,self.y-cangle*delta,2*vm*self.vmod*sangle,-2*vm*self.vmod*cangle)
 
 
 

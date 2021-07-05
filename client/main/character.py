@@ -1,12 +1,12 @@
 import pygame
 
 class Character():
-    def __init__(self,game, pid, x, y, theta):
+    def __init__(self,game, pid, x, y, angle):
         self.game=game
         self.pid=pid
         self.x=x
         self.y=y
-        self.theta=theta
+        self.angle=angle
         self.r=10
         print(self.game.player.pid, self.pid, type(self.game.player.pid), type(self.pid))
         if self.game.player.pid==self.pid:

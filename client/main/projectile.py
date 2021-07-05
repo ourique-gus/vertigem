@@ -19,9 +19,11 @@ class Projectile():
         pass
         
     def draw(self):
+        dx=self.x-self.game.camera.x
+        dy=self.y-self.game.camera.y
         self.game.screen.blit(self.sprite, (
-            self.x-self.sprite_size[0]/2-self.game.camera.x+self.game.screen.width/2,
-            self.y-self.sprite_size[1]/2-self.game.camera.y+self.game.screen.height/2
+            dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[0]/2,
+            -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2
             )
         )
         

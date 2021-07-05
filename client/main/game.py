@@ -53,6 +53,8 @@ class Game():
             0:None,
             }
         
+        pygame.mouse.set_visible(False)
+        pygame.event.set_grab(True)
         
         self.max_server_pid=8192
         self.background=Background(self,8913,10000,10000,10000)
@@ -71,9 +73,10 @@ class Game():
                 if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
                     self.entities.pop(ent)
             ents=[ent for ent in self.entities]
-            
+
             self.controls.get_controls()
             self.controls.controls_to_data()
+            #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
             
             data=self.networking.send(self.controls.data)
             if data and len(data):
