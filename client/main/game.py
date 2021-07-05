@@ -11,7 +11,7 @@ from main.background import Background
 
 class Game():
     def __init__(self):
-        self.tps=30
+        self.tps=60
         self.dt=1/self.tps
         self.is_running=False
         

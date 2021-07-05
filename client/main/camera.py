@@ -9,6 +9,8 @@ class Camera():
         self.angle=0
         self.cangle=1
         self.sangle=0
+        self.x_shift=0
+        self.y_shift=300
         
     def update(self):
         if hasattr(self.game,'player') and self.game.player.pid in self.game.entities:

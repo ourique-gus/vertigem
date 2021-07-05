@@ -26,8 +26,8 @@ class Character():
         dx=self.x-self.game.camera.x
         dy=self.y-self.game.camera.y
         self.game.screen.blit(self.sprite, (
-            dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[0]/2,
-            -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2
+            dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[0]/2+self.game.camera.x_shift,
+            -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2+self.game.camera.y_shift
             )
         )
         

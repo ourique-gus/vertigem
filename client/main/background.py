@@ -38,8 +38,8 @@ class Background():
             dx=self.x[star]-self.game.camera.x
             dy=self.y[star]-self.game.camera.y
             self.game.screen.blit(self.sprite[self.sid[star]], (
-                dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[self.sid[star]][0]/2,
-                -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[self.sid[star]][1]/2
+                dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[self.sid[star]][0]/2+self.game.camera.x_shift,
+                -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[self.sid[star]][1]/2+self.game.camera.y_shift
                 )
             )
         
