@@ -19,14 +19,14 @@ class Projectile():
         
     def update(self):
         self.tick+=1
-        self.x+=self.vx
-        self.y+=self.vy
         
         if self.tick > 600:
             self.remove=True
         
         
     def draw(self):
+        self.x+=self.vx
+        self.y+=self.vy
         dx=self.x-self.game.camera.x
         dy=self.y-self.game.camera.y
         self.game.screen.blit(self.sprite, (
