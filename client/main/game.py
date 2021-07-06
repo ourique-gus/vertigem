@@ -58,7 +58,7 @@ class Game():
         pygame.event.set_grab(True)
         
         self.max_server_pid=8192
-        self.background=Background(self,8913,10000,10000,10000)
+        self.background=Background(self,8913,1000,1000,1000)
         self.entities={
             8913:self.background,
             #8914:Collider(self,8914, 0, 200, 0, 50)

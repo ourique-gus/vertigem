@@ -17,5 +17,5 @@ class Camera():
             self.x=self.game.entities[self.game.player.pid].x
             self.y=self.game.entities[self.game.player.pid].y
             self.angle=self.game.entities[self.game.player.pid].angle
-            self.cangle=1#np.cos(self.angle)
-            self.sangle=0#np.sin(self.angle)
+            self.cangle=np.cos(self.angle)
+            self.sangle=np.sin(self.angle)
