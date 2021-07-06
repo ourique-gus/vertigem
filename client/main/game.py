@@ -12,7 +12,7 @@ from main.collider import Collider
 
 class Game():
     def __init__(self):
-        self.tps=30
+        self.tps=60
         self.dt=1/self.tps
         self.is_running=False
         
@@ -58,7 +58,7 @@ class Game():
         pygame.event.set_grab(True)
         
         self.max_server_pid=8192
-        self.background=Background(self,8913,1000,1000,1000)
+        self.background=Background(self,8913,1000,1000,20)
         self.entities={
             8913:self.background,
             #8914:Collider(self,8914, 0, 200, 0, 50)

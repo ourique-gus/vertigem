@@ -1,3 +1,5 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import pygame
 
 class Screen():
@@ -8,11 +10,17 @@ class Screen():
         
     def start(self):
         pygame.init()
-        self.screen = pygame.display.set_mode([self.width, self.height])
+        self.screen = pygame.display.set_mode((self.width, self.height), pygame.DOUBLEBUF | pygame.OPENGL)
+        glClearColor(0.0, 0.0, 0.0, 1.0); 
         
     def update(self):
-        self.screen.fill((0,0,0))
+        glPushMatrix()
+    
+        self.game.camera.place_camera()
         
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        glMatrixMode(GL_MODELVIEW);
         
         ent_zorder=[self.game.entities[ent].zorder if hasattr(self.game.entities[ent],"zorder") else -9999 for ent in self.game.entities]
         
@@ -26,6 +34,8 @@ class Screen():
                or not self.game.entities[ent].is_hidden):
                 self.game.entities[ent].draw()
                 
+                
+        glPopMatrix()
         pygame.display.flip()
         
     def blit(self, *args):

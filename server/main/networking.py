@@ -35,7 +35,7 @@ class Networking():
             client_thread=threading.Thread(target=self.client_thread, args=(conn,player_id,))
             client_thread.start()
             self.client_threads[player_id]=client_thread
-            self.server.entities[player_id]=Character(self.server, player_id, np.random.rand()*768, np.random.rand()*768, 0)
+            self.server.entities[player_id]=Character(self.server, player_id, np.random.rand()*10, np.random.rand()*10, 0)
             
     def client_thread(self,conn, player_id):
         st=time.time()

@@ -1,3 +1,5 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import numpy as np
 import pygame
 
@@ -31,6 +33,7 @@ class Background():
         
     def draw(self):
         for star in range(self.num):
+            """
             if np.random.rand() < 0.1:
                 self.sid[star]+=1
             if self.sid[star] >= self.num_sprites:
@@ -42,6 +45,13 @@ class Background():
                 -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[self.sid[star]][1]/2+self.game.camera.y_shift
                 )
             )
+            """
+            glBegin(GL_QUADS)
+            glVertex3fv((self.x[star]-5,self.y[star]-5,0))
+            glVertex3fv((self.x[star]-5,self.y[star]+5,0))
+            glVertex3fv((self.x[star]+5,self.y[star]+5,0))
+            glVertex3fv((self.x[star]+5,self.y[star]-5,0))
+            glEnd()
         
     def set_pid(self,pid):
         self.pid=pid
