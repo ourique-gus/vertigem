@@ -18,6 +18,7 @@ class Character():
         self.max_delay=1
         self.delay=0
         self.event='None'
+        self.proj_speed=1
         
     def update(self):
         self.angle=self.controls[5]/1000.
@@ -25,15 +26,15 @@ class Character():
         sangle=np.sin(self.angle)
         if self.delay:
             self.delay-=1
-        dvx=-self.controls[1]+self.controls[3]
-        dvy=-self.controls[0]+self.controls[2]
-        vx=cangle*dvx-sangle*dvy
-        vy=+sangle*dvx+cangle*dvy
+        dvx=(-self.controls[1]+self.controls[3])
+        dvy=(-self.controls[0]+self.controls[2])
+        vx=-cangle*dvy+sangle*dvx
+        vy=-sangle*dvy-cangle*dvx
 
         vr=np.sqrt(vx*vx+vy*vy)
         if vr > 0:
-            self.vx=vx/vr
-            self.vy=vy/vr
+            self.vx=vx/vr*self.vmod
+            self.vy=vy/vr*self.vmod
         else:
             vrr=np.sqrt(self.vx*self.vx+self.vy*self.vy)
             vr_var=vrr-self.vmod*0.01
@@ -43,8 +44,8 @@ class Character():
             else:
                 self.vx=0
                 self.vy=0
-        self.x+=self.vx*self.vmod
-        self.y+=self.vy*self.vmod
+        self.x+=self.vx
+        self.y+=self.vy
         
         if self.controls[4] and not self.delay:
             self.delay=self.max_delay
@@ -53,8 +54,7 @@ class Character():
                 pid=np.random.randint(1,self.server.networking.max_id)
             delta=20
 
-            vm=np.sqrt(self.vx*self.vx+self.vy*self.vy)
-            self.server.entities[pid]=ProjectileSpawner(self.server, pid,self.x+sangle*delta,self.y-cangle*delta,2*vm*self.vmod*sangle,-2*vm*self.vmod*cangle)
+            self.server.entities[pid]=ProjectileSpawner(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
 
 
 

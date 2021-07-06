@@ -71,8 +71,8 @@ class Networking():
         self.server.entities.pop(player_id)
 
     def start_server_networking_thread(self):
-        self.server_thread=threading.Thread(target=self.server_thread, args=())
-        self.server_thread.start()
+        self.server_networking_thread=threading.Thread(target=self.server_thread, args=())
+        self.server_networking_thread.start()
         
     def get_entities_data(self):
         var=','.join([':'.join([

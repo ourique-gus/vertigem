@@ -19,7 +19,7 @@ class Camera():
         self.y_shift=300
         self.fov=90
         self.min_dist=0.1
-        self.max_dist=10000
+        self.max_dist=1000
         self.ratio=self.game.screen_width/self.game.screen_height
         
         

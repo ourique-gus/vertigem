@@ -1,6 +1,7 @@
 import socket
 import threading
 import urllib.request
+import time
 
 class Networking:
     def __init__(self, game, ip=None, port=None):
@@ -11,6 +12,7 @@ class Networking:
         self.port = not port and 7777 or port
         self.addr = (self.ip, self.port)
         self.player_id=0
+        self.data=''
         
     def connect(self):
         try:
@@ -32,3 +34,13 @@ class Networking:
     def get_server_ip(self):
         with urllib.request.urlopen('https://gleenusip.herokuapp.com/') as data:
             return data.read().decode("utf-8")
+            
+    def client_thread(self):
+        time.sleep(1)
+        while True:
+            self.data = self.send(self.game.controls.data)
+            
+    def start_client_networking_thread(self):
+        self.client_networking_thread=threading.Thread(target=self.client_thread, args=())
+        self.client_networking_thread.start()
+        

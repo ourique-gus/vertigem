@@ -42,6 +42,8 @@ class Game():
         self.player=Player(self, self.networking.player_id)
         self.camera=Camera(self, 0, 0)
         
+        self.networking.start_client_networking_thread()
+        
         self.screen.start()        
         self.is_running=True
         
@@ -64,7 +66,6 @@ class Game():
             #8914:Collider(self,8914, 0, 200, 0, 50)
         }
         
-        
         while self.is_running:
             self.clock.tick(self.tps)
             
@@ -84,7 +85,8 @@ class Game():
             self.controls.controls_to_data()
             #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
             
-            data=self.networking.send(self.controls.data)
+            data=self.networking.data
+            print(data)
             if data and len(data):
                 pid_list=set()
                 players=data.split(',')
