@@ -1,6 +1,7 @@
 import socket
 import threading
 import numpy as np
+import time
 from main.character import Character
 
 class Networking():
@@ -37,11 +38,12 @@ class Networking():
             self.server.entities[player_id]=Character(self.server, player_id, np.random.rand()*768, np.random.rand()*768, 0)
             
     def client_thread(self,conn, player_id):
+        st=time.time()
         conn.send( str(player_id).encode() )
         reply = ""
         while True:
             try:
-                data = conn.recv(16384).decode()
+                data = conn.recv(2048).decode()
                 
                 if not data:
                     print("Disconnected")
@@ -56,7 +58,8 @@ class Networking():
                         reply=self.get_entities_data()
                         
                     #self.server.print_log("Received: " + data + ", Sending : " + reply)
-
+                print (time.time()-st)
+                st=time.time()
                 conn.sendall(str.encode(reply))
             except Exception as e:
                 print(e)

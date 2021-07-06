@@ -15,7 +15,7 @@ class Networking:
     def connect(self):
         try:
             self.socket.connect(self.addr)
-            self.player_id=self.socket.recv(16384).decode()
+            self.player_id=self.socket.recv(2048).decode()
             self.connection_status=self.player_id
             return self.connection_status
         except Exception as e:
@@ -25,7 +25,7 @@ class Networking:
     def send(self, data):
         try:
             self.socket.send(str.encode(data))
-            return self.socket.recv(16384).decode()
+            return self.socket.recv(2048).decode()
         except socket.error as e:
             self.game.print_log(str(e))
             
