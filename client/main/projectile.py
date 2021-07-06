@@ -1,3 +1,5 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import pygame
 
 class Projectile():
@@ -19,21 +21,29 @@ class Projectile():
         
     def update(self):
         self.tick+=1
+        self.x+=self.vx
+        self.y+=self.vy
         
         if self.tick > 600:
             self.remove=True
         
         
     def draw(self):
-        self.x+=self.vx
-        self.y+=self.vy
-        dx=self.x-self.game.camera.x
-        dy=self.y-self.game.camera.y
-        self.game.screen.blit(self.sprite, (
-            dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[0]/2+self.game.camera.x_shift,
-            -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2+self.game.camera.y_shift
-            )
-        )
+        #self.x+=self.vx
+        #self.y+=self.vy
+        #dx=self.x-self.game.camera.x
+        #dy=self.y-self.game.camera.y
+        #self.game.screen.blit(self.sprite, (
+        #    dx*self.game.camera.cangle+dy*self.game.camera.sangle+self.game.screen.width/2-self.sprite_size[0]/2+self.game.camera.x_shift,
+        #    -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2+self.game.camera.y_shift
+        #    )
+        #)
+        glBegin(GL_QUADS)
+        glVertex3fv((self.x-2,self.y-2,0))
+        glVertex3fv((self.x-2,self.y+2,0))
+        glVertex3fv((self.x+2,self.y+2,0))
+        glVertex3fv((self.x+2,self.y-2,0))
+        glEnd()
         
     def set_pid(self,pid):
         self.pid=pid

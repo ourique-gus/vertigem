@@ -25,7 +25,7 @@ class Controls():
             #dx=self.mouse[0]-self.game.screen.width/2
             #dy=self.mouse[1]-self.game.screen.height/2
             #angle=np.arctan2(dy,dx)
-            self.game.entities[self.game.player.pid].angle+=self.rel[0]/1000.
+            self.game.entities[self.game.player.pid].angle-=self.rel[0]/1000.
             angle=self.game.entities[self.game.player.pid].angle
 
         self.data=':'.join([str(i) for i in [
