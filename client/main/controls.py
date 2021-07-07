@@ -8,7 +8,8 @@ class Controls():
         self.mouse=[0,0]
         self.keys=None
         self.rel=[0,0]
-        self.data=''
+        self.get_controls()
+        self.data=controls_to_data
         
     def get_controls(self):
         self.keys=pygame.key.get_pressed()

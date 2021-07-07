@@ -9,6 +9,7 @@ from main.character import Character
 from main.projectile_spawner import ProjectileSpawner
 from main.background import Background
 from main.collider import Collider
+from main.projectile import Projectile
 
 class Game():
     def __init__(self):
@@ -50,6 +51,7 @@ class Game():
         self.kind_from_to={
             0:Character,
             1:ProjectileSpawner,
+            2:Projectile,
             }
             
         self.event_from_to={

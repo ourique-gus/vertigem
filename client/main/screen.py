@@ -12,13 +12,14 @@ class Screen():
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.DOUBLEBUF | pygame.OPENGL)
         glClearColor(0.0, 0.0, 0.0, 1.0); 
+        glEnable(GL_DEPTH_TEST)
         
     def update(self):
         glPushMatrix()
     
         self.game.camera.place_camera()
         
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         
         glMatrixMode(GL_MODELVIEW);
         
