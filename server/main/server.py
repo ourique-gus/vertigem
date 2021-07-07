@@ -36,6 +36,7 @@ class Server():
         self.kind_from_to={
             'Character':0,
             'ProjectileSpawner':1,
+            'Projectile':2,
             }
             
         self.event_from_to={

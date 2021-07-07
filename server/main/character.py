@@ -1,5 +1,6 @@
 import numpy as np
 from main.projectile_spawner import ProjectileSpawner
+from main.projectile import Projectile
 
 class Character():
     def __init__(self,server, pid, x, y, angle):
@@ -66,7 +67,7 @@ class Character():
             while pid in self.server.networking.client_threads:
                 pid=np.random.randint(1,self.server.networking.max_id)
             delta=20
-            self.server.entities[pid]=ProjectileSpawner(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
+            self.server.entities[pid]=Projectile(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
 
 
 
