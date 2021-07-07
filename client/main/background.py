@@ -47,6 +47,7 @@ class Background():
                 )
             )
             """
+            glColor3f(1, 1, 1);
             glBegin(GL_QUADS)
             glVertex3fv((self.x[star]-5,self.y[star]-5,0))
             glVertex3fv((self.x[star]-5,self.y[star]+5,0))

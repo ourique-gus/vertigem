@@ -45,5 +45,33 @@ class Collider():
         glVertex3fv((self.xf,self.yf,0))
         glVertex3fv((self.xf,self.yi,0))
         glEnd()
+        
+        glBegin(GL_QUADS)
+        glVertex3fv((self.xi,self.yi,100))
+        glVertex3fv((self.xi,self.yf,100))
+        glVertex3fv((self.xf,self.yf,100))
+        glVertex3fv((self.xf,self.yi,100))
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glVertex3fv((self.xi,self.yi,0))
+        glVertex3fv((self.xi,self.yi,100))
+        glVertex3fv((self.xf,self.yi,100))
+        glVertex3fv((self.xf,self.yi,0))
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glVertex3fv((self.xi,self.yi,0))
+        glVertex3fv((self.xi,self.yi,100))
+        glVertex3fv((self.xi,self.yf,100))
+        glVertex3fv((self.xi,self.yf,0))
+        glEnd()
+        
+        glBegin(GL_QUADS)
+        glVertex3fv((self.xf,self.yi,0))
+        glVertex3fv((self.xf,self.yi,100))
+        glVertex3fv((self.xf,self.yf,100))
+        glVertex3fv((self.xf,self.yf,0))
+        glEnd()
         glColor3f(1.0, 1, 1);
         

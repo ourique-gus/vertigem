@@ -36,7 +36,7 @@ class Networking:
             return data.read().decode("utf-8")
             
     def client_thread(self):
-        time.sleep(1)
+        time.sleep(3)
         while True:
             self.data = self.send(self.game.controls.data)
             

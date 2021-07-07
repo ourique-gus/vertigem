@@ -18,7 +18,7 @@ class Character():
         self.max_delay=10
         self.delay=0
         self.event='None'
-        self.proj_speed=2.5
+        self.proj_speed=5.1
         
     def look_for_collider(self):
         for ent in self.server.entities:
@@ -48,7 +48,7 @@ class Character():
             self.vy=vy/vr*self.vmod
         else:
             vrr=np.sqrt(self.vx*self.vx+self.vy*self.vy)
-            vr_var=vrr-self.vmod*0.01
+            vr_var=vrr-self.vmod*0.05
             if vrr > 0 and vr_var > 0:
                 self.vx=self.vx/vrr*vr_var
                 self.vy=self.vy/vrr*vr_var
