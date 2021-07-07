@@ -39,13 +39,13 @@ class Game():
         
         self.clock=pygame.time.Clock()
         self.screen=Screen(self,self.screen_width, self.screen_height)
+        self.camera=Camera(self, 0, 0)
+        self.screen.start()        
         self.controls=Controls(self)
         self.player=Player(self, self.networking.player_id)
-        self.camera=Camera(self, 0, 0)
         
         self.networking.start_client_networking_thread()
         
-        self.screen.start()        
         self.is_running=True
         
         self.kind_from_to={
