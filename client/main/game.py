@@ -63,7 +63,14 @@ class Game():
         self.background=Background(self,8913,1000,1000,20)
         self.entities={
             8913:self.background,
-            #8914:Collider(self,8914, 0, 200, 0, 50)
+            8914:Collider(self,8914, -500, 500, -500, -450),
+            8915:Collider(self,8915, -500, 500, 450, 500),
+            8916:Collider(self,8916, -500, -450, -500, 500),
+            8917:Collider(self,8917, 450, 500, -500, 500),
+            8918:Collider(self,8918, 250, 300, -150, -100),
+            8919:Collider(self,8919, 0, 50, -500, 0),
+            8920:Collider(self,8920, -350, -300, -100, -50),
+            8921:Collider(self,8921, -200, 200, 200, 250),
         }
         
         while self.is_running:
@@ -86,7 +93,6 @@ class Game():
             #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
             
             data=self.networking.data
-            print(data)
             if data and len(data):
                 pid_list=set()
                 players=data.split(',')

@@ -6,6 +6,7 @@ class Character():
     def __init__(self,game, pid, x, y, vx, vy, angle):
         self.game=game
         self.pid=pid
+        self.kind='Character'
         self.x=x
         self.y=y
         self.vx=vx
@@ -34,12 +35,14 @@ class Character():
         #    -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2+self.game.camera.y_shift
         #    )
         #)
+        glColor3f(1.0, 0, 0);
         glBegin(GL_QUADS)
         glVertex3fv((self.x-10,self.y-10,0))
         glVertex3fv((self.x-10,self.y+10,0))
         glVertex3fv((self.x+10,self.y+10,0))
         glVertex3fv((self.x+10,self.y-10,0))
         glEnd()
+        glColor3f(1.0, 1, 1);
         
     def set_pid(self,pid):
         self.pid=pid

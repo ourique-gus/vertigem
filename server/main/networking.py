@@ -58,7 +58,6 @@ class Networking():
                         reply=self.get_entities_data()
                         
                     #self.server.print_log("Received: " + data + ", Sending : " + reply)
-                print (time.time()-st)
                 st=time.time()
                 conn.sendall(str.encode(reply))
             except Exception as e:

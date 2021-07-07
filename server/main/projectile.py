@@ -13,6 +13,13 @@ class Projectile():
         self.event='None'
         self.r=5
         
+    def look_for_collider(self):
+        for ent in self.server.entities:
+            if self.server.entities[ent].kind=='Collider':
+                collision=self.server.entities[ent].get_collision(self.x,self.y,self.r)
+                if collision:
+                    return True
+        
     def update(self):
         self.tick+=1
         self.x+=self.vx
@@ -24,8 +31,11 @@ class Projectile():
                 drsq=dx*dx+dy*dy
                 drvar=self.r+self.server.entities[pid].r
                 if drsq < drvar*drvar:
-                    self.server.entities[pid].x=np.random.rand()*1366
-                    self.server.entities[pid].y=np.random.rand()*768
+                    self.server.entities[pid].x=(np.random.rand()-0.5)*450
+                    self.server.entities[pid].y=(np.random.rand()-0.5)*450
+
+        if self.look_for_collider():
+            self.remove=True
         
-        if self.tick > 600:
+        if self.tick > 300:
             self.remove=True

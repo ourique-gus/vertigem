@@ -15,10 +15,21 @@ class Character():
         self.health=100
         self.controls=[0,0,0,0,0,0]
         self.vmod=5
-        self.max_delay=1
+        self.max_delay=10
         self.delay=0
         self.event='None'
-        self.proj_speed=1
+        self.proj_speed=2.5
+        
+    def look_for_collider(self):
+        for ent in self.server.entities:
+            if self.server.entities[ent].kind=='Collider':
+                collision=self.server.entities[ent].get_collision(self.x,self.y,self.r)
+                if collision:
+                    self.x+=collision[0]
+                    self.y+=collision[1]
+                
+    def collide(self):
+        pass
         
     def update(self):
         self.angle=self.controls[5]/1000.
@@ -47,13 +58,14 @@ class Character():
         self.x+=self.vx
         self.y+=self.vy
         
+        self.look_for_collider()
+        
         if self.controls[4] and not self.delay:
             self.delay=self.max_delay
             pid=np.random.randint(1,self.server.networking.max_id)
             while pid in self.server.networking.client_threads:
                 pid=np.random.randint(1,self.server.networking.max_id)
             delta=20
-
             self.server.entities[pid]=ProjectileSpawner(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
 
 

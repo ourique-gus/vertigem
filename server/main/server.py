@@ -1,6 +1,7 @@
 import pygame
-from main.networking import Networking
 import datetime
+from main.networking import Networking
+from main.collider import Collider
 
 class Server():
     def __init__(self):
@@ -41,7 +42,16 @@ class Server():
             'None':0,
             }
         
-        self.entities={}
+        self.entities={
+            8914:Collider(self,8914, -500, 500, -500, -450),
+            8915:Collider(self,8915, -500, 500, 450, 500),
+            8916:Collider(self,8916, -500, -450, -500, 500),
+            8917:Collider(self,8917, 450, 500, -500, 500),
+            8918:Collider(self,8918, 250, 300, -150, -100),
+            8919:Collider(self,8919, 0, 50, -500, 0),
+            8920:Collider(self,8920, -350, -300, -100, -50),
+            8921:Collider(self,8921, -200, 200, 200, 250),
+            }
         
         while self.is_running:
             self.clock.tick(self.tps)

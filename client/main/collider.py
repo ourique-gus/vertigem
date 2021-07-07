@@ -1,3 +1,5 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import numpy as np
 import pygame
 
@@ -17,20 +19,31 @@ class Collider():
         self.sprite.fill(self.colour)
         self.sprite_size=self.sprite.get_size()
         
+    def get_collision(self, x, y, r):
+        xl=-(x+r)+(self.xi)
+        xr=+(x-r)-(self.xf)
+        yt=(y-r)-(self.yf)
+        yb=-(y+r)+(self.yi)
+        dx=max([xl,xr])
+        dy=max([yt,yb])
+        if dx < 0 and dy < 0:
+            if dx > dy:
+                sign=xl > xr and -1 or 1
+                return (-dx*sign, 0)
+            else:
+                sign=yt > yb and -1 or 1
+                return (0,dy*sign)
+        
     def update(self):
         pass
         
     def draw(self):
-        dxi=self.xi-self.game.camera.x
-        dxf=self.xf-self.game.camera.x
-        dyi=self.yi-self.game.camera.y
-        dyf=self.yf-self.game.camera.y
-        rot=np.vstack([[self.game.camera.cangle, self.game.camera.sangle], [-self.game.camera.sangle, self.game.camera.cangle]]).T
-        vec=np.vstack([(dxi,dyi), (dxf,dyi), (dxf,dyf), (dxi,dyf)]).T
-        vec_rot=np.dot(rot,vec).T
-        vec[:,0]+=self.game.screen.width/2+self.game.camera.x_shift
-        vec[:,1]+=self.game.screen.height/2+self.game.camera.y_shift
-        
-        pygame.draw.polygon(self.game.screen.screen, self.colour, vec_rot)
-  
+        glColor3f(0.0, 0, 1);
+        glBegin(GL_QUADS)
+        glVertex3fv((self.xi,self.yi,0))
+        glVertex3fv((self.xi,self.yf,0))
+        glVertex3fv((self.xf,self.yf,0))
+        glVertex3fv((self.xf,self.yi,0))
+        glEnd()
+        glColor3f(1.0, 1, 1);
         

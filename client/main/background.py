@@ -7,6 +7,7 @@ class Background():
     def __init__(self,game, pid, width, height, num):
         self.game=game
         self.pid=pid
+        self.kind='Background'
         self.width=width
         self.height=height
         self.num=num

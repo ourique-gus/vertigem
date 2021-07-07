@@ -6,6 +6,7 @@ class Projectile():
     def __init__(self,game, pid, x, y, vx, vy, theta):
         self.game=game
         self.pid=pid
+        self.kind='Projectile'
         self.x=x
         self.y=y
         self.vx=vx
@@ -19,12 +20,22 @@ class Projectile():
         self.sprite_size=self.sprite.get_size()
         self.tick=0
         
+    def look_for_collider(self):
+        for ent in self.game.entities:
+            if self.game.entities[ent].kind=='Collider':
+                collision=self.game.entities[ent].get_collision(self.x,self.y,self.r)
+                if collision:
+                    return True
+        
     def update(self):
         self.tick+=1
         self.x+=self.vx
         self.y+=self.vy
         
-        if self.tick > 600:
+        if self.tick > 300:
+            self.remove=True
+            
+        if self.look_for_collider():
             self.remove=True
         
         
