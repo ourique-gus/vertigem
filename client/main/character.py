@@ -25,9 +25,15 @@ class Character():
         
         self.vertices=model_transform.scale(self.game.model_loader.models['ship']['vertices'],10,10,10)
         self.faces=self.game.model_loader.models['ship']['faces']
+        self.normals=model_transform.normals(self.game.model_loader.models['ship']['normals'])
+
         self.model=model_transform.model(self.vertices,self.faces)
         self.model_len=len(self.model)
-        self.vbo=vbo.VBO(self.model)
+        self.model_vbo=vbo.VBO(self.model)
+        
+        self.normals_len=len(self.normals)
+        self.normals_vbo=vbo.VBO(self.normals)
+        
         
     def update(self):
         self.x=self.x+self.vx
@@ -47,20 +53,31 @@ class Character():
         #glBlendEquation(GL_FUNC_ADD);
         glColor4f(0.5,0.5,0.5,1)
         
-        glNormal3fv((0,0,1))
+        glEnableClientState(GL_NORMAL_ARRAY)
+        self.normals_vbo.bind()
+        glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
+        self.normals_vbo.unbind()
+        glDisableClientState(GL_NORMAL_ARRAY)
+
         glEnableClientState(GL_VERTEX_ARRAY)
-        self.vbo[:] = model_transform.model(
+        
+        self.model_vbo[:] = model_transform.model(
                 model_transform.move(
                     #model_transform.rot_z(self.vertices,-self.angle),
                     self.vertices,
                     self.x,self.y,self.z),
                 self.faces)
-        self.vbo.bind()
-        self.vbo.implementation.glBufferSubData(self.vbo.target, 0, self.vbo.data)
-        glVertexPointer(3, GL_FLOAT, 0, self.vbo)
+        self.model_vbo.bind()
+        self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
+        glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)
+
         glDrawArrays(GL_TRIANGLES, 0, self.model_len)
-        self.vbo.unbind()
+
+        self.model_vbo.unbind()
+       
         glDisableClientState(GL_VERTEX_ARRAY)
+        
+        
         glDisable(GL_COLOR_MATERIAL)
         glDisable(GL_LIGHTING)
         glDisable(GL_BLEND)

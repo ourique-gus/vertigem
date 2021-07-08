@@ -10,7 +10,10 @@ class ModelTransform():
         
     def model(self,vertices,faces):
         return np.require(vertices[faces].ravel(),np.float32,'F')
-            
+        
+    def normals(self,normals):
+        return normals.ravel()
+        
     def scale(self,vertices,sx,sy,sz):
         self.t3v1[0]=sx
         self.t3v1[1]=sy

@@ -98,8 +98,6 @@ class Game():
             self.controls.controls_to_data()
             #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
             
-            print(self.clock.get_fps())
-            
             data=self.networking.data
             if data and len(data):
                 pid_list=set()

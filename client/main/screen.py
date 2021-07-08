@@ -28,7 +28,7 @@ class Screen():
         
         glEnable(GL_LIGHT0)
         
-        glLightfv(GL_LIGHT0, GL_POSITION, (0,0,100,1))
+        glLightfv(GL_LIGHT0, GL_POSITION, (50,50,50,1))
         #glLightfv(GL_LIGHT0, GL_AMBIENT, (1,0,0,1))
         glLightfv(GL_LIGHT0, GL_DIFFUSE, (1,0,0,1))
         glLightfv(GL_LIGHT0, GL_SPECULAR, (0,0,0,1))
