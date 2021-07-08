@@ -5,6 +5,7 @@ from main.controls import Controls
 from main.player import Player
 from main.camera import Camera
 from main.screen import Screen
+from main.model_loader import ModelLoader
 from main.character import Character
 from main.projectile_spawner import ProjectileSpawner
 from main.background import Background
@@ -39,6 +40,7 @@ class Game():
         
         self.clock=pygame.time.Clock()
         self.screen=Screen(self,self.screen_width, self.screen_height)
+        self.model_loader=ModelLoader(self)
         self.camera=Camera(self, 0, 0)
         self.screen.start()        
         self.controls=Controls(self)
@@ -60,6 +62,8 @@ class Game():
         
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
+        
+        self.model_loader.load_all_models()
         
         self.max_server_pid=8192
         self.background=Background(self,8913,1000,1000,20)
@@ -94,6 +98,8 @@ class Game():
             self.controls.controls_to_data()
             #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
             
+            print(self.clock.get_fps())
+            
             data=self.networking.data
             if data and len(data):
                 pid_list=set()
@@ -103,8 +109,8 @@ class Game():
                     pid=int(info[0])
                     pid_list.add(pid)
                     kind=int(info[1])
-                    x=float(info[2])/100
-                    y=float(info[3])/100
+                    x=float(info[2])/1000
+                    y=float(info[3])/1000
                     vx=float(info[4])/100
                     vy=float(info[5])/100
                     event=int(info[6])
