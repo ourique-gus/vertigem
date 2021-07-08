@@ -28,10 +28,10 @@ class Screen():
         
         glEnable(GL_LIGHT0)
         
-        glLightfv(GL_LIGHT0, GL_POSITION, (50,50,50,1))
-        #glLightfv(GL_LIGHT0, GL_AMBIENT, (1,0,0,1))
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, (1,0,0,1))
-        glLightfv(GL_LIGHT0, GL_SPECULAR, (0,0,0,1))
+        glLightfv(GL_LIGHT0, GL_POSITION, (50,50,100,1))
+        #glLightfv(GL_LIGHT0, GL_AMBIENT, (0,0,1,1))
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, (1,1,1,1))
+        #glLightfv(GL_LIGHT0, GL_SPECULAR, (0,0,0,1))
         #glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, self.dir)
         #glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, self.exp)
         #glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, self.cut)

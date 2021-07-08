@@ -23,9 +23,13 @@ class Character():
         else:
             self.colour=(255,255,255,255)
         
-        self.vertices=model_transform.scale(self.game.model_loader.models['ship']['vertices'],10,10,10)
-        self.faces=self.game.model_loader.models['ship']['faces']
-        self.normals=model_transform.normals(self.game.model_loader.models['ship']['normals'])
+        model_name='ship'
+        
+        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,10)
+        self.faces=self.game.model_loader.models[model_name]['model']['faces']
+        self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'])
+        self.uv=model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
+        self.texture_id=[ model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
 
         self.model=model_transform.model(self.vertices,self.faces)
         self.model_len=len(self.model)
@@ -34,6 +38,8 @@ class Character():
         self.normals_len=len(self.normals)
         self.normals_vbo=vbo.VBO(self.normals)
         
+        self.uv_len=len(self.uv)
+        self.uv_vbo=vbo.VBO(self.uv)
         
     def update(self):
         self.x=self.x+self.vx
@@ -44,22 +50,30 @@ class Character():
         glEnable(GL_LIGHTING)
         
         #glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,(0.2,0.2,0.2,1))
-        glMaterialfv(GL_FRONT,GL_DIFFUSE,(1,0.0,0.8,1))
+        glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,(1,1,1,1))
         #glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,(0,0,0,1))
         #glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,0)
         glEnable(GL_COLOR_MATERIAL)
         glEnable(GL_BLEND)
+        glEnable(GL_TEXTURE_2D)
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         #glBlendEquation(GL_FUNC_ADD);
-        glColor4f(0.5,0.5,0.5,1)
+        glColor4f(1,1,1,1)
         
+        
+        
+        glBindTexture(GL_TEXTURE_2D, self.texture_id[0]) 
         glEnableClientState(GL_NORMAL_ARRAY)
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY)
+        glEnableClientState(GL_VERTEX_ARRAY)
+        
         self.normals_vbo.bind()
         glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
         self.normals_vbo.unbind()
-        glDisableClientState(GL_NORMAL_ARRAY)
-
-        glEnableClientState(GL_VERTEX_ARRAY)
+        
+        self.uv_vbo.bind()
+        glTexCoordPointer(2, GL_FLOAT, 0, self.uv_vbo)
+        self.uv_vbo.unbind()   
         
         self.model_vbo[:] = model_transform.model(
                 model_transform.move(
@@ -70,17 +84,21 @@ class Character():
         self.model_vbo.bind()
         self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
         glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)
+        self.model_vbo.unbind()
+
 
         glDrawArrays(GL_TRIANGLES, 0, self.model_len)
-
-        self.model_vbo.unbind()
        
+        glDisableClientState(GL_NORMAL_ARRAY)
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY)
         glDisableClientState(GL_VERTEX_ARRAY)
         
         
-        glDisable(GL_COLOR_MATERIAL)
         glDisable(GL_LIGHTING)
+        glDisable(GL_COLOR_MATERIAL)
         glDisable(GL_BLEND)
+        glDisable(GL_TEXTURE_2D)
+        
         
         glColor3f(1.0, 1, 1);
         

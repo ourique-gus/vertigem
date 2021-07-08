@@ -89,6 +89,9 @@ class Game():
             ents=[ent for ent in self.entities]
             for ent in ents:
                 if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
+                    if hasattr(self.entities[ent],'texture_id'):
+                        for idv in self.entities[ent].texture_id:
+                            glDeleteTextures(1, idv)
                     self.entities.pop(ent)
                 elif hasattr(self.entities[ent],'update'):
                     self.entities[ent].update()

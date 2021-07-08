@@ -1,5 +1,8 @@
+from OpenGL.GL import *
+from OpenGL.GLU import *
 from OpenGL.arrays import vbo
 import numpy as np
+import pygame
 import os
 
 class ModelTransform():
@@ -12,7 +15,30 @@ class ModelTransform():
         return np.require(vertices[faces].ravel(),np.float32,'F')
         
     def normals(self,normals):
-        return normals.ravel()
+        return np.require(normals.ravel(),np.float32,'F')
+        
+    def uv(self,uv):
+        return np.require(uv.ravel(),np.float32,'F')
+        
+    def bind_texture(self,texture):
+        textureTranspose=pygame.transform.flip(texture,False,False)
+        textureData = pygame.image.tostring(textureTranspose, "RGBA", 1)
+        width = textureTranspose.get_width()
+        height = textureTranspose.get_height()
+
+        glEnable(GL_TEXTURE_2D)
+        idv = glGenTextures(1)
+
+        glBindTexture(GL_TEXTURE_2D, idv)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData)
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glDisable(GL_TEXTURE_2D)
+        
+        return idv
         
     def scale(self,vertices,sx,sy,sz):
         self.t3v1[0]=sx
