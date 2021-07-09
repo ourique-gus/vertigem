@@ -14,8 +14,8 @@ class ModelTransform():
     def model(self,vertices,faces):
         return np.require(vertices[faces].ravel(),np.float32,'F')
         
-    def normals(self,normals):
-        return np.require(normals.ravel(),np.float32,'F')
+    def normals(self,normals,faces):
+        return np.require(normals[faces].ravel(),np.float32,'F')
         
     def uv(self,uv):
         return np.require(uv.ravel(),np.float32,'F')

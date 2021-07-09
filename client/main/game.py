@@ -1,5 +1,7 @@
 import pygame
 import datetime
+from OpenGL.GL import *
+from OpenGL.GLU import *
 from main.networking import Networking
 from main.controls import Controls
 from main.player import Player

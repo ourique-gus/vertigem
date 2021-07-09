@@ -25,9 +25,9 @@ class Character():
         
         model_name='ship'
         
-        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,10)
+        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,3)
         self.faces=self.game.model_loader.models[model_name]['model']['faces']
-        self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'])
+        self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
         self.uv=model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
         self.texture_id=[ model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
 
@@ -61,19 +61,20 @@ class Character():
         glColor4f(1,1,1,1)
         
         
+
         
-        glBindTexture(GL_TEXTURE_2D, self.texture_id[0]) 
         glEnableClientState(GL_NORMAL_ARRAY)
+        glBindTexture(GL_TEXTURE_2D, self.texture_id[0]) 
         glEnableClientState(GL_TEXTURE_COORD_ARRAY)
         glEnableClientState(GL_VERTEX_ARRAY)
+
+        self.uv_vbo.bind()
+        glTexCoordPointer(2, GL_FLOAT, 0, self.uv_vbo)
+        self.uv_vbo.unbind()
         
         self.normals_vbo.bind()
         glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
         self.normals_vbo.unbind()
-        
-        self.uv_vbo.bind()
-        glTexCoordPointer(2, GL_FLOAT, 0, self.uv_vbo)
-        self.uv_vbo.unbind()   
         
         self.model_vbo[:] = model_transform.model(
                 model_transform.move(
@@ -85,13 +86,13 @@ class Character():
         self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
         glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)
         self.model_vbo.unbind()
-
+        
 
         glDrawArrays(GL_TRIANGLES, 0, self.model_len)
        
-        glDisableClientState(GL_NORMAL_ARRAY)
         glDisableClientState(GL_TEXTURE_COORD_ARRAY)
         glDisableClientState(GL_VERTEX_ARRAY)
+        glDisableClientState(GL_NORMAL_ARRAY)
         
         
         glDisable(GL_LIGHTING)
