@@ -119,8 +119,8 @@ class Game():
                     event=int(info[6])
                     if not pid in self.entities:
                         self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, vx, vy, 0)
-                    self.entities[pid].x=(5*self.entities[pid].x+x)/6
-                    self.entities[pid].y=(5*self.entities[pid].y+y)/6
+                    self.entities[pid].x=(self.entities[pid].x+x)/2
+                    self.entities[pid].y=(self.entities[pid].y+y)/2
                     self.entities[pid].vx=vx
                     self.entities[pid].vy=vy
                 for ent in ents:
