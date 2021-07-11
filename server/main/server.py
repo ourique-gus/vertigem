@@ -9,7 +9,7 @@ class Server():
         self.ip='192.168.0.57'
         self.port=7777
         self.max_connections=6
-        self.tps=30
+        self.tps=10
         self.dt=1/self.tps
         self.is_running=False
         

@@ -16,7 +16,7 @@ from main.projectile import Projectile
 
 class Game():
     def __init__(self):
-        self.tps=30
+        self.tps=120
         self.dt=1/self.tps
         self.is_running=False
         

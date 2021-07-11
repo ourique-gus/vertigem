@@ -49,12 +49,14 @@ class Projectile():
         #    -dx*self.game.camera.sangle+dy*self.game.camera.cangle+self.game.screen.height/2-self.sprite_size[1]/2+self.game.camera.y_shift
         #    )
         #)
+        glLoadIdentity()
+        glTranslatef(self.x,self.y,0)
         glColor3f(1, 0.0, 1);
         glBegin(GL_QUADS)
-        glVertex3fv((self.x-2,self.y-2,0))
-        glVertex3fv((self.x-2,self.y+2,0))
-        glVertex3fv((self.x+2,self.y+2,0))
-        glVertex3fv((self.x+2,self.y-2,0))
+        glVertex3fv((-2.0,-2.0,0))
+        glVertex3fv((-2.0, 2.0,0))
+        glVertex3fv(( 2.0, 2.0,0))
+        glVertex3fv(( 2.0,-2.0,0))
         glEnd()
         
     def set_pid(self,pid):

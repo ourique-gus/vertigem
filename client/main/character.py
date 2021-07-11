@@ -45,8 +45,8 @@ class Character():
         
     def update(self):
         pass
-        #self.x=self.x+self.vx
-        #self.y=self.y+self.vy
+        self.x=self.x+self.vx
+        self.y=self.y+self.vy
         self.tick+=1
         
     def draw(self):
