@@ -84,15 +84,6 @@ class Character():
         glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
         self.normals_vbo.unbind()
         
-        """
-        self.model_vbo[:] = model_transform.model(
-                model_transform.move(
-                    #model_transform.rot_z(self.vertices,-self.angle),
-                    self.vertices,
-                    self.x,self.y,self.z),
-                self.faces)
-        self.model_vbo.bind()
-        """
         self.model_vbo.bind()
         self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
         glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)

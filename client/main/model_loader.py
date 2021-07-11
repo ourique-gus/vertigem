@@ -9,6 +9,7 @@ class ModelLoader():
         self.model_path_list={
             'ship':{'model':['models', 'ship.npz'], 'texture':['models', 'ship.png'] },
             'cube':{'model':['models', 'cube.npz'], 'texture':['models', 'cube.png'] },
+            'projectile':{'model':['models', 'projectile.npz'], 'texture':['models', 'projectile.png'] },
         }
         
         self.models={}
