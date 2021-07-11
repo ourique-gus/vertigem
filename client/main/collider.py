@@ -38,6 +38,7 @@ class Collider():
         pass
         
     def draw(self):
+    
         glColor3f(0.0, 0, 1);
         glBegin(GL_QUADS)
         glVertex3fv((self.xi,self.yi,0))

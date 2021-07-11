@@ -38,6 +38,7 @@ class Camera():
         gluPerspective( self.fov , self.ratio, self.min_dist , self.max_dist )
         gluLookAt(self.x,self.y,self.z,self.x+0.9*self.z*self.cangle,self.y+0.9*self.z*self.sangle,0,self.cangle,self.sangle,0)
         
+        
 
         #glRotatef(180,1 , 0, 0)
         #glTranslatef(-self.x,-self.y,self.z)

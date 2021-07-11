@@ -1,8 +1,9 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.arrays import vbo
-import pygame
 from main.model_transform import ModelTransform
+import pygame
+import numpy as np
 
 model_transform=ModelTransform()
 
@@ -25,7 +26,7 @@ class Character():
         
         model_name='ship'
         
-        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,3)
+        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,10)
         self.faces=self.game.model_loader.models[model_name]['model']['faces']
         self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
         self.uv=model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
@@ -40,12 +41,18 @@ class Character():
         
         self.uv_len=len(self.uv)
         self.uv_vbo=vbo.VBO(self.uv)
+        self.tick=0
         
     def update(self):
         self.x=self.x+self.vx
         self.y=self.y+self.vy
+        self.tick+=1
         
     def draw(self):
+
+        glLoadIdentity()
+        glTranslatef(self.x,self.y,0)
+        glRotatef(self.angle*180/np.pi+self.tick,0 , 0, 1)
         
         glEnable(GL_LIGHTING)
         
@@ -76,12 +83,15 @@ class Character():
         glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
         self.normals_vbo.unbind()
         
+        """
         self.model_vbo[:] = model_transform.model(
                 model_transform.move(
                     #model_transform.rot_z(self.vertices,-self.angle),
                     self.vertices,
                     self.x,self.y,self.z),
                 self.faces)
+        self.model_vbo.bind()
+        """
         self.model_vbo.bind()
         self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
         glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)

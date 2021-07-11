@@ -2,6 +2,7 @@ import pygame
 import datetime
 from main.networking import Networking
 from main.collider import Collider
+from main.character import Character
 
 class Server():
     def __init__(self):
@@ -52,6 +53,7 @@ class Server():
             8919:Collider(self,8919, 0, 50, -500, 0),
             8920:Collider(self,8920, -350, -300, -100, -50),
             8921:Collider(self,8921, -200, 200, 200, 250),
+            0:Character(self,0, 50, 50, 0),
             }
         
         while self.is_running:
