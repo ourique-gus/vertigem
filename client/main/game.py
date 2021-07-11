@@ -16,7 +16,7 @@ from main.projectile import Projectile
 
 class Game():
     def __init__(self):
-        self.tps=120
+        self.tps=60
         self.dt=1/self.tps
         self.is_running=False
         
@@ -119,8 +119,8 @@ class Game():
                     event=int(info[6])
                     if not pid in self.entities:
                         self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, vx, vy, 0)
-                    self.entities[pid].x=x
-                    self.entities[pid].y=y
+                    self.entities[pid].x=(5*self.entities[pid].x+x)/6
+                    self.entities[pid].y=(5*self.entities[pid].y+y)/6
                     self.entities[pid].vx=vx
                     self.entities[pid].vy=vy
                 for ent in ents:
