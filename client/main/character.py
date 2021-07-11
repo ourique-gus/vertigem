@@ -26,7 +26,7 @@ class Character():
         
         model_name='ship'
         
-        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,10)
+        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,3)
         self.faces=self.game.model_loader.models[model_name]['model']['faces']
         self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
         self.uv=model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
