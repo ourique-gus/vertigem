@@ -43,6 +43,7 @@ class Server():
         self.event_from_to={
             'None':0,
             }
+            
         
         self.entities={
             8914:Collider(self,8914, -500, 500, -500, -450),
