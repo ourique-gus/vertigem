@@ -25,8 +25,8 @@ class Camera():
         
     def update(self):
         if hasattr(self.game,'player') and self.game.player.pid in self.game.entities:
-            self.x=self.game.entities[self.game.player.pid].x)
-            self.y=self.game.entities[self.game.player.pid].y)
+            self.x=self.game.entities[self.game.player.pid].x
+            self.y=self.game.entities[self.game.player.pid].y
             self.angle=self.game.entities[self.game.player.pid].angle
             self.cangle=np.cos(self.angle)
             self.sangle=np.sin(self.angle)
