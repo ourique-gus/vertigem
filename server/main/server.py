@@ -3,6 +3,7 @@ import datetime
 from main.networking import Networking
 from main.collider import Collider
 from main.character import Character
+from main.entity_manager import EntityManager
 
 class Server():
     def __init__(self):
@@ -32,6 +33,7 @@ class Server():
     def start_server(self):
         self.print_log('>> Server starter <<')
         self.clock=pygame.time.Clock()
+        self.entity_manager=EntityManager(self)
         self.is_running=True
         
         self.kind_from_to={
@@ -54,20 +56,13 @@ class Server():
             8919:Collider(self,8919, 0, 50, -500, 0),
             8920:Collider(self,8920, -350, -300, -100, -50),
             8921:Collider(self,8921, -200, 200, 200, 250),
-            #0:Character(self,0, 50, 50, 0),
+            0:Character(self,0, 50, 50, 0),
             }
-        
+            
         while self.is_running:
             self.clock.tick(self.tps)
-            
-            ents={ent for ent in self.entities}
-            
-            for ent in ents:
-                if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
-                    self.entities.pop(ent)
-                elif hasattr(self.entities[ent],'update'):
-                    self.entities[ent].update()
-                
+        
+            self.entity_manager.update_entities()
             
     def get_now(self):
         return datetime.datetime.now().strftime("%d/%m/%YT%H:%M:%S")

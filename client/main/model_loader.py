@@ -10,6 +10,7 @@ class ModelLoader():
             'ship':{'model':['models', 'ship.npz'], 'texture':['models', 'ship.png'] },
             'cube':{'model':['models', 'cube.npz'], 'texture':['models', 'cube.png'] },
             'projectile':{'model':['models', 'projectile.npz'], 'texture':['models', 'projectile.png'] },
+            'wall':{'model':['models', 'wall.npz'], 'texture':['models', 'wall.png'] },
         }
         
         self.models={}

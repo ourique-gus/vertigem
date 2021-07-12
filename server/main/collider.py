@@ -1,4 +1,6 @@
-import numpy as np
+import pygame
+import datetime
+from main.character import Character
 
 class Collider():
     def __init__(self,server, pid, xi, xf, yi, yf):

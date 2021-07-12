@@ -30,6 +30,7 @@ class Networking:
             return self.socket.recv(2048).decode()
         except socket.error as e:
             self.game.print_log(str(e))
+            exit()
             
     def get_server_ip(self):
         with urllib.request.urlopen('https://gleenusip.herokuapp.com/') as data:

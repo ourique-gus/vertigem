@@ -35,22 +35,22 @@ class Screen():
         #glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, self.dir)
         #glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, self.exp)
         #glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, self.cut)
-        #glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, self.att['CONSTANT'])
+        glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1)
         #glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, self.att['LINEAR'])
         #glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, self.att['QUADRATIC'])
         
         
-        ent_zorder=[self.game.entities[ent].zorder if hasattr(self.game.entities[ent],"zorder") else -9999 for ent in self.game.entities]
+        ent_zorder=[self.game.entity_manager.entities[ent].zorder if hasattr(self.game.entity_manager.entities[ent],"zorder") else -9999 for ent in self.game.entity_manager.entities]
         
         sorted_index=sorted(range(len(ent_zorder)), key=ent_zorder.__getitem__)
-        keys=[ent for ent in self.game.entities]
+        keys=[ent for ent in self.game.entity_manager.entities]
         sorted_keys=[keys[index] for index in sorted_index]
         
         for ent in sorted_keys:
-            if hasattr(self.game.entities[ent],"draw") \
-               and (not hasattr(self.game.entities[ent],"is_hidden")  \
-               or not self.game.entities[ent].is_hidden):
-                self.game.entities[ent].draw()
+            if hasattr(self.game.entity_manager.entities[ent],"draw") \
+               and (not hasattr(self.game.entity_manager.entities[ent],"is_hidden")  \
+               or not self.game.entity_manager.entities[ent].is_hidden):
+                self.game.entity_manager.entities[ent].draw()
                 
                 
         glPopMatrix()

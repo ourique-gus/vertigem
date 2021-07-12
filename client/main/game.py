@@ -13,6 +13,9 @@ from main.projectile_spawner import ProjectileSpawner
 from main.background import Background
 from main.collider import Collider
 from main.projectile import Projectile
+from main.model_transform import ModelTransform
+from main.entity_manager import EntityManager
+
 
 class Game():
     def __init__(self):
@@ -40,6 +43,8 @@ class Game():
     def start_game(self):
         self.print_log('>> Game started <<')
         
+        self.model_transform=ModelTransform()
+        
         self.clock=pygame.time.Clock()
         self.screen=Screen(self,self.screen_width, self.screen_height)
         self.model_loader=ModelLoader(self)
@@ -52,20 +57,12 @@ class Game():
         
         self.is_running=True
         
-        self.kind_from_to={
-            0:Character,
-            1:ProjectileSpawner,
-            2:Projectile,
-            }
-            
-        self.event_from_to={
-            0:None,
-            }
-        
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
         
         self.model_loader.load_all_models()
+        
+        self.entity_manager=EntityManager(self)
         
         self.max_server_pid=8192
         self.background=Background(self,8913,1000,1000,20)
@@ -88,44 +85,10 @@ class Game():
                 if event.type == pygame.QUIT:
                     self.is_running = False
             
-            ents=[ent for ent in self.entities]
-            for ent in ents:
-                if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
-                    if hasattr(self.entities[ent],'texture_id'):
-                        for idv in self.entities[ent].texture_id:
-                            glDeleteTextures(1, idv)
-                    self.entities.pop(ent)
-                elif hasattr(self.entities[ent],'update'):
-                    self.entities[ent].update()
-            ents=[ent for ent in self.entities]
-
+            self.entity_manager.update_entities()
             self.controls.get_controls()
             self.controls.controls_to_data()
-            #pygame.mouse.set_pos(self.screen_width/2, self.screen_height/2)
-            
-            data=self.networking.data
-            if data and len(data):
-                pid_list=set()
-                players=data.split(',')
-                for var in players:
-                    info=var.split(':')
-                    pid=int(info[0])
-                    pid_list.add(pid)
-                    kind=int(info[1])
-                    x=float(info[2])/1000
-                    y=float(info[3])/1000
-                    vx=float(info[4])/100
-                    vy=float(info[5])/100
-                    event=int(info[6])
-                    if not pid in self.entities:
-                        self.entities[pid]=self.kind_from_to[kind](self,pid,x,y, vx, vy, 0)
-                    self.entities[pid].x=(self.entities[pid].x+x)/2
-                    self.entities[pid].y=(self.entities[pid].y+y)/2
-                    self.entities[pid].vx=vx
-                    self.entities[pid].vy=vy
-                for ent in ents:
-                    if not ent in pid_list and ent <= self.max_server_pid:
-                        self.entities[ent].remove=True
+            self.entity_manager.set_entities_data()
             self.camera.update()            
             
             self.screen.update()

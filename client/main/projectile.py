@@ -1,15 +1,12 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.arrays import vbo
-from main.model_transform import ModelTransform
 import pygame
 import numpy as np
 
-model_transform=ModelTransform()
-
 
 class Projectile():
-    def __init__(self,game, pid, x, y, vx, vy, theta):
+    def __init__(self,game, pid, x=0, y=0, vx=0, vy=0):
         self.game=game
         self.pid=pid
         self.kind='Projectile'
@@ -17,7 +14,6 @@ class Projectile():
         self.y=y
         self.vx=vx
         self.vy=vy
-        self.theta=theta
         self.r=5
         self.colour=(255,0,0,255)
         self.sprite=pygame.Surface((2*self.r, 2*self.r), flags=pygame.SRCALPHA)
@@ -28,13 +24,13 @@ class Projectile():
         
         model_name='projectile'
         
-        self.vertices=model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],4,4,4)
+        self.vertices=self.game.model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],4,4,4)
         self.faces=self.game.model_loader.models[model_name]['model']['faces']
-        self.normals=model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
-        self.uv=model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
-        self.texture_id=[ model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
+        self.normals=self.game.model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
+        self.uv=self.game.model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
+        self.texture_id=[ self.game.model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
 
-        self.model=model_transform.model(self.vertices,self.faces)
+        self.model=self.game.model_transform.model(self.vertices,self.faces)
         self.model_len=len(self.model)
         self.model_vbo=vbo.VBO(self.model)
         
@@ -45,9 +41,9 @@ class Projectile():
         self.uv_vbo=vbo.VBO(self.uv)
         
     def look_for_collider(self):
-        for ent in self.game.entities:
-            if self.game.entities[ent].kind=='Collider':
-                collision=self.game.entities[ent].get_collision(self.x,self.y,self.r)
+        for ent in self.game.entity_manager.entities:
+            if self.game.entity_manager.entities[ent].kind=='Collider':
+                collision=self.game.entity_manager.entities[ent].get_collision(self.x,self.y,self.r)
                 if collision:
                     return True
         
@@ -62,6 +58,12 @@ class Projectile():
         if self.look_for_collider():
             self.remove=True
         
+    def set_data(self, data):
+        data_int=list(map(int,data.split(':')))
+        self.x=data_int[2]/1000.
+        self.y=data_int[3]/1000.
+        self.vx=data_int[4]/100.
+        self.vy=data_int[5]/100.
         
     def draw(self):
         glLoadIdentity()

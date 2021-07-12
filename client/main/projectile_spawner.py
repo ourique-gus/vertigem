@@ -15,9 +15,9 @@ class ProjectileSpawner():
         self.r=5
         
         pid=np.random.randint(self.game.max_server_pid+1,2*self.game.max_server_pid)
-        while pid in self.game.entities:
+        while pid in self.game.entity_manager.entities:
             pid=np.random.randint(self.game.max_server_pid+1,2*self.game.max_server_pid)
         delta=20
 
-        self.game.entities[pid]=Projectile(self.game, pid,self.x, self.y, self.vx, self.vy, theta)
+        self.game.entity_manager.entities[pid]=Projectile(self.game, pid,self.x, self.y, self.vx, self.vy, theta)
         self.remove=True
