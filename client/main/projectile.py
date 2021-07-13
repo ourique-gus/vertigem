@@ -24,7 +24,7 @@ class Projectile():
         
         model_name='projectile'
         
-        self.vertices=self.game.model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],4,4,4)
+        self.vertices=self.game.model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],2,2,2)
         self.faces=self.game.model_loader.models[model_name]['model']['faces']
         self.normals=self.game.model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
         self.uv=self.game.model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])

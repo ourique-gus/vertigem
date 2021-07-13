@@ -16,7 +16,7 @@ class Character():
         self.health=100
         self.controls=[0,0,0,0,0,0]
         self.vmod=5
-        self.max_delay=10
+        self.max_delay=30
         self.delay=0
         self.event='None'
         self.proj_speed=5.1
@@ -73,11 +73,15 @@ class Character():
         
         if self.controls[4] and not self.delay:
             self.delay=self.max_delay
-            pid=np.random.randint(1,self.server.networking.max_id)
-            while pid in self.server.entity_manager.entities:
+            for proj in range(7):
+                dangle=self.angle+0.5*(np.random.rand()-0.5)
+                cangle=np.cos(self.angle)
+                sangle=np.sin(self.angle)
                 pid=np.random.randint(1,self.server.networking.max_id)
-            delta=20
-            self.server.entity_manager.entities[pid]=Projectile(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
+                while pid in self.server.entity_manager.entities:
+                    pid=np.random.randint(1,self.server.networking.max_id)
+                delta=20
+                self.server.entity_manager.entities[pid]=Projectile(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
 
 
 
