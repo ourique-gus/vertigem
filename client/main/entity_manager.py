@@ -44,7 +44,6 @@ class EntityManager():
             
     def set_entities_data(self):
         data=self.game.networking.data
-        print(data)
         if data and len(data):
             pid_list=set()
             pid_data=data.split(',')
