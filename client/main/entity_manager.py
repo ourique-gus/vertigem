@@ -36,7 +36,7 @@ class EntityManager():
             if hasattr(self.entities[ent],'remove') and self.entities[ent].remove:
                 if hasattr(self.entities[ent],'texture_id'):
                     for idv in self.entities[ent].texture_id:
-                        glDeleteTextures(1, idv)
+                        glDeleteTextures(1, np.array([idv]))
                 self.entities.pop(ent)
             elif hasattr(self.entities[ent],'update'):
                 self.entities[ent].update()
