@@ -27,6 +27,8 @@ class Screen():
         glMatrixMode(GL_MODELVIEW);
         
         glEnable(GL_LIGHT0)
+        glDepthFunc(GL_LESS)
+        glDepthMask(GL_TRUE)
         
         glLightfv(GL_LIGHT0, GL_POSITION, (50,50,100,1))
         #glLightfv(GL_LIGHT0, GL_AMBIENT, (0,0,1,1))
