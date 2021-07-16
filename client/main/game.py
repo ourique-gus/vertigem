@@ -7,13 +7,12 @@ from main.controls import Controls
 from main.player import Player
 from main.camera import Camera
 from main.screen import Screen
-from main.model_loader import ModelLoader
+from main.model_manager import ModelManager
 from main.character import Character
 from main.projectile_spawner import ProjectileSpawner
 from main.background import Background
 from main.collider import Collider
 from main.projectile import Projectile
-from main.model_transform import ModelTransform
 from main.entity_manager import EntityManager
 
 
@@ -43,11 +42,10 @@ class Game():
     def start_game(self):
         self.print_log('>> Game started <<')
         
-        self.model_transform=ModelTransform()
         
         self.clock=pygame.time.Clock()
         self.screen=Screen(self,self.screen_width, self.screen_height)
-        self.model_loader=ModelLoader(self)
+        self.model_manager=ModelManager(self)
         self.camera=Camera(self, 0, 0)
         self.screen.start()        
         self.controls=Controls(self)
@@ -60,7 +58,7 @@ class Game():
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
         
-        self.model_loader.load_all_models()
+        self.model_manager.load_all_models()
         
         self.entity_manager=EntityManager(self)
         

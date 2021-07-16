@@ -24,13 +24,13 @@ class Character():
         
         model_name='ship'
         
-        self.vertices=self.game.model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],10,10,3)
-        self.faces=self.game.model_loader.models[model_name]['model']['faces']
-        self.normals=self.game.model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
-        self.uv=self.game.model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
-        self.texture_id=[ self.game.model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
+        self.vertices=self.game.model_manager.scale(self.game.model_manager.models[model_name]['model']['vertices'],10,10,3)
+        self.faces=self.game.model_manager.models[model_name]['model']['faces']
+        self.normals=self.game.model_manager.normals(self.game.model_manager.models[model_name]['model']['normals'],self.faces)
+        self.uv=self.game.model_manager.uv(self.game.model_manager.models[model_name]['model']['uv'])
+        self.texture_id=[ self.game.model_manager.bind_texture(self.game.model_manager.models[model_name]['texture']) ]
 
-        self.model=self.game.model_transform.model(self.vertices,self.faces)
+        self.model=self.game.model_manager.model(self.vertices,self.faces)
         self.model_len=len(self.model)
         self.model_vbo=vbo.VBO(self.model)
         

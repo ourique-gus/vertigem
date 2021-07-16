@@ -24,13 +24,14 @@ class Projectile():
         
         model_name='projectile'
         
-        self.vertices=self.game.model_transform.scale(self.game.model_loader.models[model_name]['model']['vertices'],2,2,2)
-        self.faces=self.game.model_loader.models[model_name]['model']['faces']
-        self.normals=self.game.model_transform.normals(self.game.model_loader.models[model_name]['model']['normals'],self.faces)
-        self.uv=self.game.model_transform.uv(self.game.model_loader.models[model_name]['model']['uv'])
-        self.texture_id=[ self.game.model_transform.bind_texture(self.game.model_loader.models[model_name]['texture']) ]
+        """
+        self.vertices=self.game.model_manager.scale(self.game.model_manager.models[model_name]['model']['vertices'],2,2,2)
+        self.faces=self.game.model_manager.models[model_name]['model']['faces']
+        self.normals=self.game.model_manager.normals(self.game.model_manager.models[model_name]['model']['normals'],self.faces)
+        self.uv=self.game.model_manager.uv(self.game.model_manager.models[model_name]['model']['uv'])
+        self.texture_id=[ self.game.model_manager.bind_texture(self.game.model_manager.models[model_name]['texture']) ]
 
-        self.model=self.game.model_transform.model(self.vertices,self.faces)
+        self.model=self.game.model_manager.model(self.vertices,self.faces)
         self.model_len=len(self.model)
         self.model_vbo=vbo.VBO(self.model)
         
@@ -39,6 +40,9 @@ class Projectile():
         
         self.uv_len=len(self.uv)
         self.uv_vbo=vbo.VBO(self.uv)
+        """
+        self.vbo=self.game.model_manager.vbos[model_name]
+        self.texture_id=[self.game.model_manager.textures[model_name]]
         
     def look_for_collider(self):
         for ent in self.game.entity_manager.entities:
@@ -91,21 +95,20 @@ class Projectile():
         glEnableClientState(GL_TEXTURE_COORD_ARRAY)
         glEnableClientState(GL_VERTEX_ARRAY)
 
-        self.uv_vbo.bind()
-        glTexCoordPointer(2, GL_FLOAT, 0, self.uv_vbo)
-        self.uv_vbo.unbind()
+        self.vbo['uv'].bind()
+        glTexCoordPointer(2, GL_FLOAT, 0, self.vbo['uv'])
+        self.vbo['uv'].unbind()
+        self.vbo['normals'].bind()
+        glNormalPointer(GL_FLOAT, 0, self.vbo['normals'])
+        self.vbo['normals'].unbind()
         
-        self.normals_vbo.bind()
-        glNormalPointer(GL_FLOAT, 0, self.normals_vbo)
-        self.normals_vbo.unbind()
-        
-        self.model_vbo.bind()
-        self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
-        glVertexPointer(3, GL_FLOAT, 0, self.model_vbo)
-        self.model_vbo.unbind()
+        self.vbo['model'].bind()
+        #self.model_vbo.implementation.glBufferSubData(self.model_vbo.target, 0, self.model_vbo.data)
+        glVertexPointer(3, GL_FLOAT, 0, self.vbo['model'])
+        self.vbo['model'].unbind()
         
 
-        glDrawArrays(GL_TRIANGLES, 0, self.model_len)
+        glDrawArrays(GL_TRIANGLES, 0, self.vbo['model_len'])
        
         glDisableClientState(GL_TEXTURE_COORD_ARRAY)
         glDisableClientState(GL_VERTEX_ARRAY)
