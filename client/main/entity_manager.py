@@ -47,9 +47,10 @@ class EntityManager():
                 pid=int(var_split[0])
                 pid_list.add(pid)
                 kind=int(var_split[1])
-                if not pid in self.entities:
+                if not pid in self.entities and pid > 8:
                     self.entities[pid]=self.kind_from_to[kind](self.game,pid)
-                self.entities[pid].set_data(var)
+                if pid > 8 and hasattr(self.entities[pid],'set_data'):
+                    self.entities[pid].set_data(var)
             for ent in self.entities:
                 if not ent in pid_list and ent <= self.max_server_pid:
                     self.entities[ent].remove=True

@@ -73,15 +73,16 @@ class Character():
         
         if self.controls[4] and not self.delay:
             self.delay=self.max_delay
-            for proj in range(7):
+            for proj in range(6):
                 dangle=self.angle+0.5*(np.random.rand()-0.5)
-                cangle=np.cos(self.angle)
-                sangle=np.sin(self.angle)
-                pid=np.random.randint(1,self.server.networking.max_id)
+                cangle=np.cos(dangle)
+                sangle=np.sin(dangle)
+                pid=np.random.randint(*self.server.entity_manager.id_range['projectile'])
                 while pid in self.server.entity_manager.entities:
-                    pid=np.random.randint(1,self.server.networking.max_id)
+                    pid=np.random.randint(*self.server.entity_manager.id_range['projectile'])
                 delta=20
-                self.server.entity_manager.entities[pid]=Projectile(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,self.proj_speed*cangle+self.vx,self.proj_speed*sangle+self.vy)
+                self.server.entity_manager.entities[pid]=Projectile(self.server, pid,self.x+cangle*delta,self.y+sangle*delta,
+                    (self.proj_speed+np.random.rand()*5)*cangle+self.vx,(self.proj_speed+np.random.rand()*5)*sangle+self.vy)
 
 
 

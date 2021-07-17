@@ -2,12 +2,16 @@ import pygame
 import datetime
 from main.collider import Collider
 from main.character import Character
+from main.info_manager import InfoManager
+from main.event_manager import EventManager
 import numpy as np
 
 class EntityManager():
     def __init__(self,server):
         self.server=server
         self.entities={
+            0:InfoManager(self,0),
+            1:EventManager(self,1),
             8914:Collider(self,8914, -500, 500, -500, -450),
             8915:Collider(self,8915, -500, 500, 450, 500),
             8916:Collider(self,8916, -500, -450, -500, 500),
@@ -18,8 +22,10 @@ class EntityManager():
             8921:Collider(self,8921, -200, 200, 200, 250),
         }
         self.id_range={
-            'ping':[0,0],
-            'character':[1,256],
+            'information':[0,1],
+            'events':[1,2],
+            'placeholder':[2,8],
+            'character':[8,256],
             'structure':[256,512],
             'projectile':[512,4096],
             'other':[4096,8192]

@@ -11,11 +11,11 @@ class FontRender():
         pygame.font.init()
 
     def render_font(self):
-        font_path=os.path.join('..','fonts',self.font)
+        font_path=os.path.join('fonts',self.font)
         self.font_draw=pygame.font.Font(font_path,self.size)
         self.full_render=self.font_draw.render(self.valid_characters, True, self.colour)
         pygame.image.save(self.full_render,'font.png')
         
-fr=FontRender(0,'arial.ttf',12,(0,0,0)) 
-fr.render_font
+fr=FontRender(0,'arial.ttf',60,(0,0,0)) 
+fr.render_font()
     

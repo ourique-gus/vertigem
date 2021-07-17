@@ -28,9 +28,9 @@ class Networking():
     def server_thread(self):
         while True:
             conn, addr = self.socket.accept()
-            player_id=np.random.randint(1,self.max_id)
+            player_id=np.random.randint(*self.server.entity_manager.id_range['character'])
             while player_id in self.client_threads:
-                player_id=np.random.randint(1,self.max_id)
+                player_id=np.random.randint(*self.server.entity_manager.id_range['character'])
             self.server.print_log("Connected to: {}:{}".format(*addr))
             client_thread=threading.Thread(target=self.client_thread, args=(conn,player_id,))
             client_thread.start()
@@ -40,7 +40,8 @@ class Networking():
     def client_thread(self,conn, player_id):
         st=time.time()
         conn.send( str(player_id).encode() )
-        reply = ""
+        self.server.entity_manager.entities[0].info[player_id]={'last_time':time.time()}
+
         while True:
             try:
                 data = conn.recv(2048).decode()
@@ -49,8 +50,11 @@ class Networking():
                     print("Disconnected")
                     break
                 else:
-                    controls=[i for i in map(int,data.split(':'))]
-                    self.server.entity_manager.entities[player_id].controls=controls
+                    try:
+                        controls=[i for i in map(int,data.split(':'))]
+                        self.server.entity_manager.entities[player_id].controls=controls
+                    except:
+                        pass
                 
                     reply=''
                     if len(self.server.entity_manager.entities):
@@ -69,19 +73,9 @@ class Networking():
         conn.close()
         self.client_threads.pop(player_id)
         self.server.entity_manager.entities.pop(player_id)
+        self.server.entity_manager.entities[0].info.pop(player_id)
 
     def start_server_networking_thread(self):
         self.server_networking_thread=threading.Thread(target=self.server_thread, args=())
         self.server_networking_thread.start()
-        
-    def get_entities_data(self):
-        var=','.join([':'.join([
-                '%4d' % pid,
-                '%2d' % self.server.kind_from_to[self.server.entity_manager.entities[pid].kind],
-                '%6d' % int(1000*self.server.entity_manager.entities[pid].x),
-                '%6d' % int(1000*self.server.entity_manager.entities[pid].y),
-                '%6d' % int(100*self.server.entity_manager.entities[pid].vx),
-                '%6d' % int(100*self.server.entity_manager.entities[pid].vy)
-            ]) for pid in self.server.entity_manager.entities if pid <= self.max_id])
-        return var
-        
+ 
