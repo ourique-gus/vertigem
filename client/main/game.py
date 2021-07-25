@@ -77,19 +77,22 @@ class Game():
         }
         
         while self.is_running:
-            self.clock.tick(self.tps)
-            
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.is_running = False
-            
-            self.entity_manager.update_entities()
-            self.controls.get_controls()
-            self.controls.controls_to_data()
-            self.entity_manager.set_entities_data()
-            self.camera.update()            
-            
-            self.screen.update()
+            try:
+                self.clock.tick(self.tps)
+                
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
+                        self.is_running = False
+                
+                self.entity_manager.update_entities()
+                self.controls.get_controls()
+                self.controls.controls_to_data()
+                self.entity_manager.set_entities_data()
+                self.camera.update()            
+                
+                self.screen.update()
+            except (KeyboardInterrupt, SystemExit):
+                self.is_running=False
             
     def get_now(self):
         return datetime.datetime.now().strftime("%d/%m/%YT%H:%M:%S")

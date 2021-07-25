@@ -43,8 +43,11 @@ class Projectile():
                 if drsq < drvar*drvar:
                     self.server.entity_manager.entities[pid].x=(np.random.rand()-0.5)*450
                     self.server.entity_manager.entities[pid].y=(np.random.rand()-0.5)*450
+                    self.server.entity_manager.event_manager.register_event('fx_projectile_hit',['%6d' % int(1000*(self.x-self.vx)), '%6d' % int(1000*(self.y-self.vy))])
+                    self.remove=True
 
         if self.look_for_collider():
+            self.server.entity_manager.event_manager.register_event('fx_projectile_hit',['%6d' % int(1000*(self.x-self.vx)), '%6d' % int(1000*(self.y-self.vy))])
             self.remove=True
         
         if self.tick > 300:

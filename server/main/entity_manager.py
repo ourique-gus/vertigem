@@ -9,9 +9,11 @@ import numpy as np
 class EntityManager():
     def __init__(self,server):
         self.server=server
+        self.info_manager=InfoManager(self,0)
+        self.event_manager=EventManager(self,1)
         self.entities={
-            0:InfoManager(self,0),
-            1:EventManager(self,1),
+            0:self.info_manager,
+            1:self.event_manager,
             8914:Collider(self,8914, -500, 500, -500, -450),
             8915:Collider(self,8915, -500, 500, 450, 500),
             8916:Collider(self,8916, -500, -450, -500, 500),
@@ -32,9 +34,11 @@ class EntityManager():
         }
         
         self.kind_from_to={
-            'Character':0,
-            'ProjectileSpawner':1,
-            'Projectile':2,
+            'InfoManager':0,
+            'EventManager':1,
+            'Character':8,
+            'Projectile':9,
+            'ProjectileSpawner':10,
             }
             
         self.event_from_to={

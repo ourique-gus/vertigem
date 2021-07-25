@@ -38,9 +38,8 @@ class Networking:
             
     def client_thread(self):
         time.sleep(1)
-        while True:
+        while self.game.is_running:
             self.data = self.send(self.game.controls.data)
-            print(self.data)
                         
     def start_client_networking_thread(self):
         self.client_networking_thread=threading.Thread(target=self.client_thread, args=())

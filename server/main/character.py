@@ -16,7 +16,7 @@ class Character():
         self.health=100
         self.controls=[0,0,0,0,0,0]
         self.vmod=5
-        self.max_delay=30
+        self.max_delay=10
         self.delay=0
         self.event='None'
         self.proj_speed=5.1
@@ -73,8 +73,8 @@ class Character():
         
         if self.controls[4] and not self.delay:
             self.delay=self.max_delay
-            for proj in range(6):
-                dangle=self.angle+0.5*(np.random.rand()-0.5)
+            for proj in range(1):
+                dangle=self.angle+0.0*(np.random.rand()-0.5)
                 cangle=np.cos(dangle)
                 sangle=np.sin(dangle)
                 pid=np.random.randint(*self.server.entity_manager.id_range['projectile'])

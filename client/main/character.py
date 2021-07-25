@@ -47,7 +47,6 @@ class Character():
         self.tick+=1
         
     def set_data(self, data):
-        print(data)
         data_int=list(map(int,data.split(':')))
         self.x=data_int[2]/1000.
         self.y=data_int[3]/1000.

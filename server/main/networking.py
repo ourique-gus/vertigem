@@ -26,7 +26,7 @@ class Networking():
         return True
         
     def server_thread(self):
-        while True:
+        while self.server.is_running:
             conn, addr = self.socket.accept()
             player_id=np.random.randint(*self.server.entity_manager.id_range['character'])
             while player_id in self.client_threads:
@@ -42,7 +42,7 @@ class Networking():
         conn.send( str(player_id).encode() )
         self.server.entity_manager.entities[0].info[player_id]={'last_time':time.time()}
 
-        while True:
+        while self.server.is_running:
             try:
                 data = conn.recv(2048).decode()
                 
