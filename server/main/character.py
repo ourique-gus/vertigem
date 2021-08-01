@@ -20,7 +20,7 @@ class Character():
         self.delay=0
         self.event='None'
         self.proj_speed=5.1
-        self.health=100
+        self.health=50
         
     def look_for_collider(self):
         for ent in self.server.entity_manager.entities:

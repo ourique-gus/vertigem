@@ -41,6 +41,8 @@ class Character():
         self.uv_vbo=vbo.VBO(self.uv)
         self.tick=0
         
+        self.is_hidden=False
+        
     def update(self):
         self.x=self.x+self.vx
         self.y=self.y+self.vy
@@ -48,12 +50,15 @@ class Character():
         
     def set_data(self, data):
         data_int=list(map(int,data.split(':')))
-        self.x=data_int[2]/1000.
-        self.y=data_int[3]/1000.
+        self.x=0.5*(self.x+data_int[2]/1000.)
+        self.y=0.5*(self.y+data_int[3]/1000.)
         self.vx=data_int[4]/100.
         self.vy=data_int[5]/100.
         
     def draw(self):
+    
+        if self.is_hidden:
+            return
 
         glLoadIdentity()
         glTranslatef(self.x,self.y,0)

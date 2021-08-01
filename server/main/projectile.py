@@ -43,9 +43,20 @@ class Projectile():
                 if drsq < drvar*drvar:
                     self.server.entity_manager.entities[pid].health-=15+np.random.rand()*5
                     if self.server.entity_manager.entities[pid].health <= 0:
+                        self.server.entity_manager.event_manager.register_event('fx_destroy_character',
+                            ['%6d' % int(1000*(self.server.entity_manager.entities[pid].x)),
+                             '%6d' % int(1000*(self.server.entity_manager.entities[pid].y))
+                            ]
+                        )
+                        self.server.entity_manager.event_manager.register_event('hide_character',
+                            ['%d' % pid]
+                        )
+                        self.server.entity_manager.event_manager.register_event('show_character',
+                            ['%d' % pid], 1
+                        )
                         self.server.entity_manager.entities[pid].x=(np.random.rand()-0.5)*450
                         self.server.entity_manager.entities[pid].y=(np.random.rand()-0.5)*450
-                        self.server.entity_manager.entities[pid].health=100
+                        self.server.entity_manager.entities[pid].health=50
                     self.server.entity_manager.event_manager.register_event('fx_projectile_hit_character',['%6d' % int(1000*(self.x-self.vx)), '%6d' % int(1000*(self.y-self.vy))])
                     self.remove=True
 

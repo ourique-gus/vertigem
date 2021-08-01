@@ -6,7 +6,7 @@ import numpy as np
 
 
 class Projectile():
-    def __init__(self,game, pid, x=0, y=0, vx=0, vy=0):
+    def __init__(self,game, pid, x=-99999, y=-99999, vx=0, vy=0):
         self.game=game
         self.pid=pid
         self.kind='Projectile'
@@ -64,8 +64,11 @@ class Projectile():
         
     def set_data(self, data):
         data_int=list(map(int,data.split(':')))
-        self.x=data_int[2]/1000.
-        self.y=data_int[3]/1000.
+        if self.x == -99999 and self.y == -99999:
+            self.x=data_int[2]/1000.
+            self.y=data_int[3]/1000.
+        self.x=(0.5*self.x+0.5*data_int[2]/1000.)
+        self.y=(0.5*self.y+0.5*data_int[3]/1000.)
         self.vx=data_int[4]/100.
         self.vy=data_int[5]/100.
         

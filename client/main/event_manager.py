@@ -15,6 +15,9 @@ class EventManager():
         self.etype_fromto={
             1:events.FXProjectileHit,
             2:events.FXProjectileHitCharacter,
+            3:events.DestroyCharacter,
+            4:events.HideCharacter,
+            5:events.ShowCharacter,
         }
         
         self.events={}
