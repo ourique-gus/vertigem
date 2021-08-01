@@ -13,6 +13,7 @@ class EventManager():
         
         self.etype_fromto={
             'fx_projectile_hit':1,
+            'fx_projectile_hit_character':2,
         }
         
         self.id_range=512

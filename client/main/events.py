@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from main.fx import RandomCube
+from main import fx
 
 def FXProjectileHit(game,par):
     x=float(par[0])/1000
@@ -9,4 +9,13 @@ def FXProjectileHit(game,par):
     num=10
     for i in range(num):
         vel=(np.random.rand(3)-0.5)
-        game.entity_manager.spawn_entity(RandomCube, x, y, vel[0], vel[1], vel[2])
+        game.entity_manager.spawn_entity(fx.RandomCube, x, y, vel[0], vel[1], vel[2])
+        
+def FXProjectileHitCharacter(game,par):
+    x=float(par[0])/1000
+    y=float(par[1])/1000
+    
+    num=10
+    for i in range(num):
+        vel=(np.random.rand(3)-0.5)
+        game.entity_manager.spawn_entity(fx.RedCube, x, y, vel[0], vel[1], vel[2])

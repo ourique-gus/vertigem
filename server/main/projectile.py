@@ -41,9 +41,12 @@ class Projectile():
                 drsq=dx*dx+dy*dy
                 drvar=self.r+self.server.entity_manager.entities[pid].r
                 if drsq < drvar*drvar:
-                    self.server.entity_manager.entities[pid].x=(np.random.rand()-0.5)*450
-                    self.server.entity_manager.entities[pid].y=(np.random.rand()-0.5)*450
-                    self.server.entity_manager.event_manager.register_event('fx_projectile_hit',['%6d' % int(1000*(self.x-self.vx)), '%6d' % int(1000*(self.y-self.vy))])
+                    self.server.entity_manager.entities[pid].health-=15+np.random.rand()*5
+                    if self.server.entity_manager.entities[pid].health <= 0:
+                        self.server.entity_manager.entities[pid].x=(np.random.rand()-0.5)*450
+                        self.server.entity_manager.entities[pid].y=(np.random.rand()-0.5)*450
+                        self.server.entity_manager.entities[pid].health=100
+                    self.server.entity_manager.event_manager.register_event('fx_projectile_hit_character',['%6d' % int(1000*(self.x-self.vx)), '%6d' % int(1000*(self.y-self.vy))])
                     self.remove=True
 
         if self.look_for_collider():

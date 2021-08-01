@@ -2,7 +2,7 @@ import pygame
 import datetime
 import time
 from main.character import Character
-from main.events import FXProjectileHit
+from main import events
 
 class EventManager():
     def __init__(self,game, pid):
@@ -13,7 +13,8 @@ class EventManager():
         self.max_duration=1/6.
         
         self.etype_fromto={
-            1:FXProjectileHit,
+            1:events.FXProjectileHit,
+            2:events.FXProjectileHitCharacter,
         }
         
         self.events={}
