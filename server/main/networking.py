@@ -40,7 +40,7 @@ class Networking():
     def client_thread(self,conn, player_id):
         st=time.time()
         conn.send( str(player_id).encode() )
-        self.server.entity_manager.entities[0].info[player_id]={'last_time':time.time()}
+        self.server.entity_manager.entities[0].info[player_id]={'last_time':[time.time()]}
 
         while self.server.is_running:
             try:

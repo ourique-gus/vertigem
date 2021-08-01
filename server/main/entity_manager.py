@@ -9,8 +9,8 @@ import numpy as np
 class EntityManager():
     def __init__(self,server):
         self.server=server
-        self.info_manager=InfoManager(self,0)
-        self.event_manager=EventManager(self,1)
+        self.info_manager=InfoManager(self.server,0)
+        self.event_manager=EventManager(self.server,1)
         self.entities={
             0:self.info_manager,
             1:self.event_manager,
