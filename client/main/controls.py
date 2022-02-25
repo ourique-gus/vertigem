@@ -24,10 +24,10 @@ class Controls():
             angle=self.game.entity_manager.entities[self.game.player.pid].angle
 
         self.data=':'.join([str(i) for i in [
-                self.keys[pygame.K_w],
-                self.keys[pygame.K_a],
-                self.keys[pygame.K_s],
-                self.keys[pygame.K_d],
+                int(self.keys[pygame.K_w]),
+                int(self.keys[pygame.K_a]),
+                int(self.keys[pygame.K_s]),
+                int(self.keys[pygame.K_d]),
                 int(self.input[0]),
                 int(1000*angle)
                 ]
